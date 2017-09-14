@@ -1,0 +1,67 @@
+{% extends "recourses/base.html" %}
+
+<title>Teste</title>
+
+{% block content %}
+    <!-- Page Content -->
+    <div class="container">
+      <header class="jumbotron my-4">
+        <h1 class="display-3">Encontre o curso certo!</h1>
+        <p class="lead">Aqui será colocado um texto muito bom, ele vai deixar você impressionado.</p>
+      </header>
+      <!-- Page Heading -->
+      <h1 class="my-4">Recursos
+      </h1>
+
+      <!-- Project One -->
+      {% for recourse in recourses_list %}
+      <div class="row">
+        <div class="col-md-7">
+          <a href="#">
+            <img class="img-fluid rounded mb-3 mb-md-0" src="http://placehold.it/700x300" alt="">
+          </a>
+        </div>
+        <div class="col-md-5">
+          <h3>{{ recourse.title }}</h3>
+          <p>{{ recourse.description }}</p>
+          <a class="btn btn-primary" href="{% url 'recourse_detail' slug=recourse.slug %}">View Project</a>
+        </div>
+      </div>
+      <!-- /.row -->
+
+      <hr>
+      {% endfor %}
+
+
+      <!-- Pagination
+      <ul class="pagination justify-content-center">
+        <li class="page-item">
+          <a class="page-link" href="#" aria-label="Previous">
+            <span aria-hidden="true">&laquo;</span>
+            <span class="sr-only">Previous</span>
+          </a>
+        </li>
+        <li class="page-item">
+          <a class="page-link" href="#">1</a>
+        </li>
+        <li class="page-item">
+          <a class="page-link" href="#">2</a>
+        </li>
+        <li class="page-item">
+          <a class="page-link" href="#">3</a>
+        </li>
+        <li class="page-item">
+          <a class="page-link" href="#" aria-label="Next">
+            <span aria-hidden="true">&raquo;</span>
+            <span class="sr-only">Next</span>
+          </a>
+        </li>
+      </ul>
+
+    </div> -->
+    <!-- /.container -->
+
+    <!-- Footer -->
+
+
+{% endblock %}

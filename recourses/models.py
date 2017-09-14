@@ -1,9 +1,10 @@
 from django.contrib.auth.models import User
 from django.utils.text import slugify
 from django.db import models
+from autoslug import AutoSlugField
 
 def image_location(instance, filename):
-    return '%s/image/%s' % (instance.slug, filename)
+    return '%s/image/%s' % (instance.recourse.slug, filename)
 
 class Tag(models.Model):
     name = models.CharField(max_length=50)
@@ -13,7 +14,7 @@ class Tag(models.Model):
 
 class Language(models.Model):
     language = models.CharField(max_length=50)
-    
+
     def __str__(self):
         return self.language
 
@@ -40,6 +41,8 @@ class Recourse(models.Model):
 
     recourses = models.ManyToManyField("self", blank = True)
 
+    slug = AutoSlugField(populate_from='title', null=True)
+
     created_date = models.DateTimeField(auto_now_add=True)
     last_modified_date = models.DateTimeField(auto_now=True, auto_now_add=False)
 
@@ -48,6 +51,7 @@ class Recourse(models.Model):
 
 class Photos(models.Model):
     recourse = models.ForeignKey(Recourse)
+    is_main = models.BooleanField(default = False)
     image = models.ImageField(upload_to=image_location, null=True, blank=True)
 
 class Feedback(models.Model):
