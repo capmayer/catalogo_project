@@ -28,8 +28,8 @@ class Recourse(models.Model):
         ('av', 'Avançados'),
         ('id', 'Indefinido')
     )
-    difficult_education = models.CharField(max_length=2, choices=DIFFICULTS, default='op')
-    difficult_student = models.CharField(max_length=2, choices=DIFFICULTS, default='op')
+    difficult_education = models.CharField(max_length=2, choices=DIFFICULTS, default='id')
+    difficult_student = models.CharField(max_length=2, choices=DIFFICULTS, default='id')
 
     value = models.FloatField(blank = True, null = True)
     url = models.CharField(max_length=150, blank = True, null=True)
@@ -59,6 +59,8 @@ class Feedback(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     title = models.CharField(max_length=150)
     description = models.TextField(max_length=255)
+
+    created_date = models.DateTimeField(auto_now_add=True, null=True)
 
     def __str__(self):
         return self.title + " by: " + self.author.username

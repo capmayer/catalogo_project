@@ -4,26 +4,102 @@
 
 {% block content %}
     <!-- Page Content -->
-    <div class="col-lg-9">
+    <div class="container">
+      <div class="col-lg-12">
 
-          <div class="card mt-4">
-            <img class="card-img-top img-fluid" src="http://placehold.it/900x400" alt="">
-            <div class="card-body">
-              <h3 class="card-title">{{ recourse.title }}</h3>
-              <h4>$24.99</h4>
-              <p class="card-text">{{ recourse.description }}</p>
-              <span class="text-warning">&#9733; &#9733; &#9733; &#9733; &#9734;</span>
-              4.0 stars
+            <div class="card mt-4">
+              <img class="card-img-top img-fluid" src="http://placehold.it/900x400" alt="">
+              <div class="card-body">
+                <h1 class="card-title">{{ recourse.title }}</h1>
+                <hr>
+                <p class="card-text">{{ recourse.description }}</p>
+                <hr>
+                <h4>Especificações: </h4>
+                {% if recourse.value %}
+                <p>{{ recourse.value }}</p>
+                {% endif %}
+                {% if recourse.url %}
+                <p>{{ recourse.url }}</p>
+                {% endif %}
+                {% if recourse.difficult_student != 'id' %}
+                <p>A dificuldade deste recurso para os estudantes é {{ recourse.difficult_student }}</p>
+                {% endif %}
+                {% if recourse.difficult_education != 'id' %}
+                <p>A dificuldade deste recurso para os docentes é {{ recourse.difficult_education }}</p>
+                {% endif %}
+
+
+
+                <hr>
+                {% for tag in recourse.tags.all %}
+                <h5> {{ tag.name }}</h5>
+                {% endfor %}
+                <!--
+                <span class="text-warning">&#9733; &#9733; &#9733; &#9733; &#9734;</span>
+                4.0 stars -->
+              </div>
             </div>
+
+
+            <div class="row text-center">
+              <div class="card col-lg-6 my-4">
+                <div class="card-header">
+                  Pros do Recurso:
+                </div>
+                <div class="card-body">
+                    {% for pro in pro_list %}
+                      <p>{{ pro.title }}</p>
+                    {% endfor %}
+                </div>
+              </div>
+              <div class="card col-lg-6  my-4">
+                <div class="card-header">
+                  Contras do Recurso:
+                </div>
+                <div class="card-body">
+                    {% for con in con_list %}
+                      <p>{{ con.title }}</p>
+                    {% endfor %}
+                </div>
+              </div>
+            </div>
+
+            <div class="card card-outline-secondary mt-4">
+              <div class="card-header">
+                Outros Recursos relacionados:
+              </div>
+              <div class="card-body">
+                  {% for rec in recourse.recourses.all %}
+                    <h5><a href="{% url 'recourse_detail' slug=rec.slug %}">{{ rec.title }}</a></h5>
+                  {% endfor %}
+              </div>
+            </div>
+
+            <div class="card card-outline-secondary my-4">
+              <div class="card-header">
+                Feedbacks do Recurso:
+              </div>
+              <div class="card-body">
+
+                {% for feedback in feedback_list %}
+                  <h3>{{ feedback.title }}</h3>
+                  <p>{{ feedback.description }}</p>
+                  <small class="text-muted">Escrito por {{ feedback.author.username }} on {{ feedback.created_date }}</small>
+                  <hr>
+                {% endfor %}
+                <button type="submit" class="btn btn-primary">Diga o que achou desse recurso</button>
+
+              </div>
+            </div>
+
+
+
+
+
           </div>
-          <!-- /.card -->
-
-
-          <!-- /.card -->
+          <!-- /.col-lg-9 -->
 
         </div>
-        <!-- /.col-lg-9 -->
 
-      </div>
 
 {% endblock %}

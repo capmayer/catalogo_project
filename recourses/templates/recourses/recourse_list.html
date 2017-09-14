@@ -1,0 +1,31 @@
+{% extends "recourses/base.html" %}
+
+{% block content %}
+    <!-- Page Content -->
+    <div class="container">
+      <form method="get">
+        {{ recourse_filter.form.as_p }}
+        <button type="submit">Search</button>
+      </form>
+      <!-- Page Heading -->
+
+      <!-- Project One -->
+      {% for recourse in recourse_filter.qs %}
+      <div class="row">
+        <div class="col-md-7">
+          <a href="#">
+            <img class="img-fluid rounded mb-3 mb-md-0" src="http://placehold.it/700x300" alt="">
+          </a>
+        </div>
+        <div class="col-md-5">
+          <h3>{{ recourse.title }}</h3>
+          <p>{{ recourse.description }}</p>
+          <a class="btn btn-primary" href="{% url 'recourse_detail' slug=recourse.slug %}">Ver recurso</a>
+        </div>
+      </div>
+      <!-- /.row -->
+
+      <hr>
+      {% endfor %}
+
+{% endblock %}
