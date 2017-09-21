@@ -42,7 +42,8 @@ def recourse_new(request):
         form = RecourseForm(request.POST)
         if form.is_valid():
             recourse = form.save(commit=False)
-            recourse.author = request.user
+            if request.user.is_authenticated:
+                recourse.author = request.user
             recourse.save()
             return redirect('recourse_detail', slug=recourse.slug)
     else:

@@ -31,15 +31,15 @@ class Recourse(models.Model):
     difficult_education = models.CharField(max_length=2, choices=DIFFICULTS, default='id')
     difficult_student = models.CharField(max_length=2, choices=DIFFICULTS, default='id')
 
-    value = models.FloatField(blank = True, null = True)
-    url = models.CharField(max_length=150, blank = True, null=True)
+    value = models.FloatField(blank=True, null=True)
+    url = models.CharField(max_length=150, blank=True, null=True)
 
-    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    author = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
 
-    tags = models.ManyToManyField(Tag, blank = True)
-    languages = models.ManyToManyField(Language, blank = True)
+    tags = models.ManyToManyField(Tag, blank=True)
+    languages = models.ManyToManyField(Language, blank=True)
 
-    recourses = models.ManyToManyField("self", blank = True)
+    recourses = models.ManyToManyField("self", blank=True)
 
     slug = AutoSlugField(populate_from='title', null=True)
 
@@ -51,7 +51,7 @@ class Recourse(models.Model):
 
 class Photos(models.Model):
     recourse = models.ForeignKey(Recourse)
-    is_main = models.BooleanField(default = False)
+    is_main = models.BooleanField(default=False)
     image = models.ImageField(upload_to=image_location, null=True, blank=True)
 
 class Feedback(models.Model):
