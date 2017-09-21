@@ -16,20 +16,17 @@
                 <hr>
                 <h4>Especificações: </h4>
                 {% if recourse.value %}
-                <p>{{ recourse.value }}</p>
+                <p>Valor: {{ recourse.value }}</p>
                 {% endif %}
                 {% if recourse.url %}
-                <p>{{ recourse.url }}</p>
+                <p>Link para acessar o recurso: {{ recourse.url }}</p>
                 {% endif %}
                 {% if recourse.difficult_student != 'id' %}
-                <p>A dificuldade deste recurso para os estudantes é {{ recourse.difficult_student }}</p>
+                <p>A dificuldade para os estudantes é {{ recourse.difficult_student }}</p>
                 {% endif %}
                 {% if recourse.difficult_education != 'id' %}
-                <p>A dificuldade deste recurso para os docentes é {{ recourse.difficult_education }}</p>
+                <p>A dificuldade para os docentes é {{ recourse.difficult_education }}</p>
                 {% endif %}
-
-
-
                 <hr>
                 {% for tag in recourse.tags.all %}
                 <h5> {{ tag.name }}</h5>
@@ -84,22 +81,35 @@
                 {% for feedback in feedback_list %}
                   <h3>{{ feedback.title }}</h3>
                   <p>{{ feedback.description }}</p>
-                  <small class="text-muted">Escrito por {{ feedback.author.username }} on {{ feedback.created_date }}</small>
+                  <small class="text-muted">Escrito por {% if feedback.author.username %} {{ feedback.author.username}} {% else %} {{ feedback.anonymous }} {% endif %} on {{ feedback.created_date }}</small>
                   <hr>
                 {% endfor %}
-                <button type="submit" class="btn btn-primary">Diga o que achou desse recurso</button>
-
+                <button type="submit" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Diga o que achou desse recurso</button>
               </div>
             </div>
-
-
-
-
-
           </div>
-          <!-- /.col-lg-9 -->
-
         </div>
+<!-- Popup for feedbacks -->
+<div class="modal fade" id="myModal" role="dialog">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Feedback</h4>
+      </div>
+      <form method="POST" class="post-form">
+        <div class="modal-body">{% csrf_token %}
+            {{ feedback_form.as_p }}
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="save btn btn-default">Salvar!</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
 
 
 {% endblock %}

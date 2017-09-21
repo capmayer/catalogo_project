@@ -1,14 +1,35 @@
 {% extends "recourses/base.html" %}
 
 {% block content %}
+{% load widget_tweaks %}
     <!-- Page Content -->
     <div class="container">
       <form method="get">
-        {{ recourse_filter.form.as_p }}
-        <button type="submit">Search</button>
+        <div class="well">
+          <div class="row">
+            <div class="form-group col-sm-5 col-md-6">
+              {{ recourse_filter.form.difficult_student.label_tag }}
+              {% render_field recourse_filter.form.difficult_student class="form-control" %}
+            </div>
+            <div class="form-group col-sm-5 col-md-6">
+              {{ recourse_filter.form.difficult_education.label_tag }}
+              {% render_field recourse_filter.form.difficult_education class="form-control" %}
+            </div>
+          </div>
+          <button type="submit" class="btn btn-primary"> <span class="glyphicon glyphicon-search"></span>Procurar</button>
+        </div>
+
       </form>
       <!-- Page Heading -->
-
+      <!--
+      <div id="wrapper-filter">
+      			<ul id="filter-bar">
+				        <span class="pill"></span>
+				        <li class="filter-option option-1 active" data-target="option-1">Books</li>
+				        <li class="filter-option option-2" data-target="option-2">Shoes</li>
+				        <li class="filter-option option-3" data-target="option-3">Toys</li>
+			      </ul>
+		   </div> -->
       <!-- Project One -->
       {% for recourse in recourse_filter.qs %}
       <div class="row">

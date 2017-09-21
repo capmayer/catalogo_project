@@ -1,6 +1,7 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from .models import Recourse, Pro, Con, Feedback
 from .filters import RecourseFilter
+from .forms import RecourseForm, FeedbackForm, FeedbackAnonymousForm
 
 
 def home(request):
@@ -14,7 +15,36 @@ def recourses_list(request):
 
 def recourse_detail(request, slug):
     recourse = Recourse.objects.get(slug=slug)
-    feedback_list = Feedback.objects.filter(recourse=recourse)
-    pro_list = Pro.objects.filter(recourse=recourse)
-    con_list = Con.objects.filter(recourse=recourse)
-    return render(request, 'recourses/recourse_detail.html', { 'recourse': recourse, 'feedback_list': feedback_list, 'pro_list': pro_list, 'con_list': con_list })
+    if request.method == "POST":
+        if request.user.is_authenticated:
+            form = FeedbackForm(request.POST)
+        else:
+            form = FeedbackAnonymousForm(request.POST)
+        if form.is_valid():
+            feedback = form.save(commit=False)
+            if request.user.is_authenticated:
+                feedback.author = request.user
+            feedback.recourse = recourse
+            feedback.save()
+            return redirect('recourse_detail', slug=slug)
+    else:
+        feedback_list = Feedback.objects.filter(recourse=recourse)
+        pro_list = Pro.objects.filter(recourse=recourse)
+        con_list = Con.objects.filter(recourse=recourse)
+        if request.user.is_authenticated:
+            feedback_form = FeedbackForm()
+        else:
+            feedback_form = FeedbackAnonymousForm()
+        return render(request, 'recourses/recourse_detail.html', { 'recourse': recourse, 'feedback_list': feedback_list, 'pro_list': pro_list, 'con_list': con_list, 'feedback_form': feedback_form })
+
+def recourse_new(request):
+    if request.method == "POST":
+        form = RecourseForm(request.POST)
+        if form.is_valid():
+            recourse = form.save(commit=False)
+            recourse.author = request.user
+            recourse.save()
+            return redirect('recourse_detail', slug=recourse.slug)
+    else:
+        form = RecourseForm()
+    return render(request, 'recourses/recourse_new.html', { 'form': form})
