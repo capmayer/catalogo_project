@@ -1,7 +1,7 @@
-from .models import Recourse
+from .models import Resource
 import django_filters
 
-class RecourseFilter(django_filters.FilterSet):
+class ResourceFilter(django_filters.FilterSet):
     class Meta:
-        model = Recourse
+        model = Resource
         fields = ['difficult_education', 'difficult_student',]

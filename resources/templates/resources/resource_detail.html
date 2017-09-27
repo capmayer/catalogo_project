@@ -1,4 +1,4 @@
-{% extends "recourses/base.html" %}
+{% extends "resources/base.html" %}
 
 <title>Teste</title>
 
@@ -10,25 +10,25 @@
             <div class="card mt-4">
               <img class="card-img-top img-fluid" src="http://placehold.it/900x400" alt="">
               <div class="card-body">
-                <h1 class="card-title">{{ recourse.title }}</h1>
+                <h1 class="card-title">{{ resource.title }}</h1>
                 <hr>
-                <p class="card-text">{{ recourse.description }}</p>
+                <p class="card-text">{{ resource.description }}</p>
                 <hr>
                 <h4>Especificações: </h4>
-                {% if recourse.value %}
-                <p>Valor: {{ recourse.value }}</p>
+                {% if resource.value %}
+                <p>Valor: {{ resource.value }}</p>
                 {% endif %}
-                {% if recourse.url %}
-                <p>Link para acessar o recurso: {{ recourse.url }}</p>
+                {% if resource.url %}
+                <p>Link para acessar o recurso: {{ resource.url }}</p>
                 {% endif %}
-                {% if recourse.difficult_student != 'id' %}
-                <p>A dificuldade para os estudantes é {{ recourse.difficult_student }}</p>
+                {% if resource.difficult_student != 'id' %}
+                <p>A dificuldade para os estudantes é {{ resource.difficult_student }}</p>
                 {% endif %}
-                {% if recourse.difficult_education != 'id' %}
-                <p>A dificuldade para os docentes é {{ recourse.difficult_education }}</p>
+                {% if resource.difficult_education != 'id' %}
+                <p>A dificuldade para os docentes é {{ resource.difficult_education }}</p>
                 {% endif %}
                 <hr>
-                {% for tag in recourse.tags.all %}
+                {% for tag in resource.tags.all %}
                 <h5> {{ tag.name }}</h5>
                 {% endfor %}
                 <!--
@@ -66,12 +66,12 @@
                 Outros Recursos relacionados:
               </div>
               <div class="card-body">
-                  {% for rec in recourse.recourses.all %}
-                    <h5><a href="{% url 'recourse_detail' slug=rec.slug %}">{{ rec.title }}</a></h5>
+                  {% for rec in resource.resources.all %}
+                    <h5><a href="{% url 'resource_detail' slug=rec.slug %}">{{ rec.title }}</a></h5>
                   {% endfor %}
               </div>
             </div>
-
+            <!--
             <div class="card card-outline-secondary my-4">
               <div class="card-header">
                 Feedbacks do Recurso:
@@ -86,10 +86,10 @@
                 {% endfor %}
                 <button type="submit" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Diga o que achou desse recurso</button>
               </div>
-            </div>
+            </div> -->
           </div>
         </div>
-<!-- Popup for feedbacks -->
+<!-- Popup for feedbacks
 <div class="modal fade" id="myModal" role="dialog">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
@@ -109,7 +109,7 @@
     </div>
   </div>
 </div>
-
+-->
 
 
 {% endblock %}

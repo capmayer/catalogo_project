@@ -1,4 +1,4 @@
-{% extends "recourses/base.html" %}
+{% extends "resources/base.html" %}
 
 {% block content %}
 {% load widget_tweaks %}
@@ -8,12 +8,12 @@
         <div class="well">
           <div class="row">
             <div class="form-group col-sm-5 col-md-6">
-              {{ recourse_filter.form.difficult_student.label_tag }}
-              {% render_field recourse_filter.form.difficult_student class="form-control" %}
+              {{ resource_filter.form.difficult_student.label_tag }}
+              {% render_field resource_filter.form.difficult_student class="form-control" %}
             </div>
             <div class="form-group col-sm-5 col-md-6">
-              {{ recourse_filter.form.difficult_education.label_tag }}
-              {% render_field recourse_filter.form.difficult_education class="form-control" %}
+              {{ resource_filter.form.difficult_education.label_tag }}
+              {% render_field resource_filter.form.difficult_education class="form-control" %}
             </div>
           </div>
           <button type="submit" class="btn btn-primary"> <span class="glyphicon glyphicon-search"></span>Procurar</button>
@@ -31,7 +31,7 @@
 			      </ul>
 		   </div> -->
       <!-- Project One -->
-      {% for recourse in recourse_filter.qs %}
+      {% for resource in resource_filter.qs %}
       <div class="row">
         <div class="col-md-7">
           <a href="#">
@@ -39,9 +39,9 @@
           </a>
         </div>
         <div class="col-md-5">
-          <h3>{{ recourse.title }}</h3>
-          <p>{{ recourse.description }}</p>
-          <a class="btn btn-primary" href="{% url 'recourse_detail' slug=recourse.slug %}">Ver recurso</a>
+          <h3>{{ resource.title }}</h3>
+          <p>{{ resource.description }}</p>
+          <a class="btn btn-primary" href="{% url 'resource_detail' slug=resource.slug %}">Ver recurso</a>
         </div>
       </div>
       <!-- /.row -->
