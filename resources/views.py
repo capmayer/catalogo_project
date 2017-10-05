@@ -7,12 +7,10 @@ from .forms import ResourceForm, FeedbackForm, FeedbackAnonymousForm, PhotoForm
 
 def home(request):
     resources_list = Resource.objects.filter(photo__is_main=True)
-    photos_list = Photo.objects.filter(resource__in=resources_list)
-    general_list = zip(resources_list, photos_list)
-    return render(request, 'resources/home.html', { 'general_list': general_list })
+    return render(request, 'resources/home.html', { 'resources_list': resources_list })
 
 def resources_list(request):
-    resources_list = Resource.objects.all()
+    resources_list = Resource.objects.filter(photo__is_main=True)
     resource_filter = ResourceFilter(request.GET, queryset=resources_list)
     return render(request, 'resources/resource_list.html', { 'resource_filter': resource_filter })
 
