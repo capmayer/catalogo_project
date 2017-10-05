@@ -5,15 +5,20 @@
  */
 
 body {
-  padding-top: 54px;
+  padding-top: 80px;
 }
 
 @media (min-width: 992px) {
   body {
-    padding-top: 56px;
+    padding-top: 80px;
   }
 }
 
 .pagination {
   margin-bottom: 15px;
+}
+
+.col-centered{
+    float: none;
+    margin: 0 auto;
 }

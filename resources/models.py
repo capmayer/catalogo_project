@@ -50,7 +50,7 @@ class Resource(models.Model):
         return self.title
 
 class Photo(models.Model):
-    resource = models.ForeignKey(Resource)
+    resource = models.ForeignKey(Resource, default=None)
     is_main = models.BooleanField(default=False)
     image = models.ImageField(upload_to=image_location, null=True, blank=True)
 
