@@ -22,7 +22,7 @@ PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = os.environ['SECRET']
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 # Application definition
 
@@ -121,7 +121,7 @@ USE_TZ = True
 
 # -- NEW TO COMMENT THE LINE ABOVE TO USE LOCAL
 # Change 'default' database configuration with $DATABASE_URL.
-#DATABASES['default'] = dj_database_url.config(conn_max_age=500)
+DATABASES['default'] = dj_database_url.config(conn_max_age=500)
 
 # Honor the 'X-Forwarded-Proto' header for request.is_secure()
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
