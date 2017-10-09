@@ -2,7 +2,6 @@ from django.contrib.auth.models import User
 from django.utils.text import slugify
 from django.db import models
 from autoslug import AutoSlugField
-from s3direct.fields import S3DirectField
 
 def image_location(instance, filename):
     return '%s/image/%s' % (instance.resource.slug, filename)
