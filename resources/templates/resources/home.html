@@ -4,15 +4,22 @@
 
 {% block content %}
     <!-- Page Content -->
+  <header class="masthead" style="background-image: url('static/resources/img/kids.jpg')">
     <div class="container">
-      <header class="jumbotron my-4">
-        <h1 class="display-3">Encontre o curso certo!</h1>
-        <p class="lead">Aqui será colocado um texto muito bom, ele vai deixar você impressionado.</p>
-      </header>
-      <!-- Page Heading -->
-      <h1 class="my-4">Recursos
-      </h1>
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <div class="site-heading">
+            <h1>Catalogy</h1>
+            <span class="subheading">Encontre o recurso certo para sua aula.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <div class="container">
 
+      <!-- Page Heading -->
+      <h1 class="my-4">Recursos</h1>
       <!-- Project One -->
       {% for resource in resources_list %}
       <div class="row">
@@ -31,7 +38,7 @@
 
       <hr>
       {% endfor %}
-
+ </div>
 
       <!-- Pagination
       <ul class="pagination justify-content-center">
