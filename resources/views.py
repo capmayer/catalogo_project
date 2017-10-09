@@ -27,7 +27,13 @@ def resource_detail(request, slug):
             feedback = form.save(commit=False)
             if request.user.is_authenticated:
                 feedback.author = request.user
+
             feedback.resource = resource
+            if 'good_feedback' in request.POST:
+                feedback.is_pro = True
+            elif 'bad_feedback' in request.POST:
+                feedback.is_pro = False
+            
             feedback.save()
             return redirect('resource_detail', slug=slug)
     else:

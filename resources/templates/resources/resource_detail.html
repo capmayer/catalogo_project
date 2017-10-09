@@ -48,6 +48,7 @@
                       <p>{{ pro.title }}</p>
                     {% endfor %}
                 </div>
+                <button type="submit" class="btn btn-primary" data-toggle="modal" data-target="#myModalGood">Adicione um comentário positivo</button>
               </div>
               <div class="card col-lg-6  my-4">
                 <div class="card-header">
@@ -58,6 +59,7 @@
                       <p>{{ con.title }}</p>
                     {% endfor %}
                 </div>
+                <button type="submit" class="btn btn-primary" data-toggle="modal" data-target="#myModalBad">Adicione um comentário negativo</button>
               </div>
             </div>
 
@@ -71,45 +73,48 @@
                   {% endfor %}
               </div>
             </div>
-            <!--
-            <div class="card card-outline-secondary my-4">
-              <div class="card-header">
-                Feedbacks do Recurso:
-              </div>
-              <div class="card-body">
-
-                {% for feedback in feedback_list %}
-                  <h3>{{ feedback.title }}</h3>
-                  <p>{{ feedback.description }}</p>
-                  <small class="text-muted">Escrito por {% if feedback.author.username %} {{ feedback.author.username}} {% else %} {{ feedback.anonymous }} {% endif %} on {{ feedback.created_date }}</small>
-                  <hr>
-                {% endfor %}
-                <button type="submit" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Diga o que achou desse recurso</button>
-              </div>
-            </div> -->
           </div>
         </div>
-<!-- Popup for feedbacks
-<div class="modal fade" id="myModal" role="dialog">
+<!-- Popup for feedbacks -->
+<div class="modal fade" id="myModalGood" role="dialog">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">Feedback</h4>
+        <h4 class="modal-title">Feedback Positivo:</h4>
       </div>
       <form method="POST" class="post-form">
-        <div class="modal-body">{% csrf_token %}
+        <div class="modal-body">
+            {% csrf_token %}
             {{ feedback_form.as_p }}
         </div>
         <div class="modal-footer">
-          <button type="submit" class="save btn btn-default">Salvar!</button>
+          <button type="submit" name="good_feedback" class="save btn btn-default">Salvar!</button>
           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
         </div>
       </form>
     </div>
   </div>
 </div>
--->
-
+<div class="modal fade" id="myModalBad" role="dialog">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Feedback negativo</h4>
+      </div>
+      <form method="POST" class="post-form">
+        <div class="modal-body">
+            {% csrf_token %}
+            {{ feedback_form.as_p }}
+        </div>
+        <div class="modal-footer">
+          <button type="submit" name="bad_feedback" class="save btn btn-default">Salvar!</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
 
 {% endblock %}

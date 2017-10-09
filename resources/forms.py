@@ -20,12 +20,12 @@ class ResourceForm(forms.ModelForm):
 class FeedbackForm(forms.ModelForm):
     class Meta:
         model = Feedback
-        fields = ('title', 'description', 'is_pro')
+        fields = ('title', 'description')
 
 class FeedbackAnonymousForm(forms.ModelForm):
     class Meta:
         model = Feedback
-        fields = ('anonymous', 'title', 'description', 'is_pro')
+        fields = ('anonymous', 'title', 'description')
 
 class ImageForm(forms.ModelForm):
     class Meta:
