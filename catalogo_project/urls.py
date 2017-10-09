@@ -20,6 +20,7 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
+    url(r'^s3direct/', include('s3direct.urls')),
     url(r'', include('resources.urls')),
     url(r'^accounts/', include('allauth.urls')),
 ]

@@ -1,3 +1,5 @@
+import json, boto3
+from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.forms import modelformset_factory
 from .models import Resource, Feedback, Photo
@@ -44,7 +46,7 @@ def resource_detail(request, slug):
 def resource_new(request):
     if request.method == "POST":
         resource_form = ResourceForm(request.POST)
-        image_form = PhotoForm(request.POST, request.FILES)
+        image_form = PhotoForm(request.POST)
         if resource_form.is_valid() and image_form.is_valid():
             resource = resource_form.save(commit=False)
 
@@ -53,17 +55,13 @@ def resource_new(request):
 
             resource.save()
 
-            image = image_form.save(commit=False)
-
             image.resource = resource
             image.is_main = True
 
             image.save()
 
             return redirect('resource_detail', slug=resource.slug)
-        else:
-            print(image_form.errors)
     else:
         resource_form = ResourceForm()
         image_form = PhotoForm()
-    return render(request, 'resources/resource_new.html', { 'resource_form': resource_form, 'image_form':image_form })
+    return render(request, 'resources/resource_new.html', { 'resource_form': resource_form, 'image_form': image_form })

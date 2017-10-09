@@ -19,9 +19,14 @@
 
         <hr>
 
-        {{ image_form.as_p }}
+        {% for field in image_form %}
+          <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+          {{ field|add_class:'form-control'}} <br />
+        {% endfor %}
+
         <button type="submit" name="form-submit" class="save btn btn-default">Salvar!</button>
     </form>
+    {{ image_form.media }}
 </div>
 </div>
 {% endblock %}

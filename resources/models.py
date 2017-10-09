@@ -2,6 +2,7 @@ from django.contrib.auth.models import User
 from django.utils.text import slugify
 from django.db import models
 from autoslug import AutoSlugField
+from s3direct.fields import S3DirectField
 
 def image_location(instance, filename):
     return '%s/image/%s' % (instance.resource.slug, filename)
@@ -50,9 +51,10 @@ class Resource(models.Model):
         return self.title
 
 class Photo(models.Model):
-    resource = models.ForeignKey(Resource, default=None)
+    resource = models.ForeignKey(Resource)
     is_main = models.BooleanField(default=False)
     image = models.ImageField(upload_to=image_location, null=True, blank=True)
+    image_url = S3DirectField(dest='example_destination', blank=True)
 
 class Feedback(models.Model):
     resource = models.ForeignKey(Resource, on_delete=models.CASCADE)

@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'allauth.account',
     'django_filters',
     'widget_tweaks',
+    's3direct',
 
     'resources',
 ]
@@ -121,7 +122,7 @@ USE_TZ = True
 
 # -- NEW TO COMMENT THE LINE ABOVE TO USE LOCAL
 # Change 'default' database configuration with $DATABASE_URL.
-DATABASES['default'] = dj_database_url.config(conn_max_age=500)
+#DATABASES['default'] = dj_database_url.config(conn_max_age=500)
 
 # Honor the 'X-Forwarded-Proto' header for request.is_secure()
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
@@ -163,3 +164,20 @@ EMAIL_HOST_USER = os.environ['SENDGRID_USER']
 EMAIL_HOST_PASSWORD = os.environ['SENDGRID_PASSWORD']
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
+
+# s3direct Configs:
+AWS_ACCESS_KEY_ID = os.environ['AWS_ACCESS_KEY_ID']
+AWS_SECRET_ACCESS_KEY = os.environ['AWS_SECRET_ACCESS_KEY']
+AWS_STORAGE_BUCKET_NAME = os.environ['S3_BUCKET']
+S3DIRECT_REGION = 'us-east-1'
+
+S3DIRECT_DESTINATIONS = {
+    'image_destination': {
+        'key': 'uploads/images',
+
+        'auth': lambda u: u.is_staff,
+        'allowed': ['image/jpeg', 'image/png'],
+        'cache_control': 'max-age=2592000',
+        'content_disposition': 'attachment',
+    }
+}
