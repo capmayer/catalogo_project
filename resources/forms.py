@@ -1,6 +1,5 @@
 from django import forms
-from s3direct.widgets import S3DirectWidget
-from .models import Resource, Feedback, Photo
+from .models import Resource, Feedback, Image
 
 class ResourceForm(forms.ModelForm):
     class Meta:
@@ -28,9 +27,8 @@ class FeedbackAnonymousForm(forms.ModelForm):
         model = Feedback
         fields = ('anonymous', 'title', 'description', 'is_pro')
 
-class PhotoForm(forms.ModelForm):
-    image_url = forms.URLField(widget=S3DirectWidget(dest='image_destination'))
+class ImageForm(forms.ModelForm):
     class Meta:
-        model = Photo
-        fields = ('image_url',)
-        labels = { 'image_url': 'Imagem'}
+        model = Image
+        fields = ('image',)
+        labels = { 'image': 'Imagem'}

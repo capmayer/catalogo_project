@@ -2,17 +2,17 @@ import json, boto3
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.forms import modelformset_factory
-from .models import Resource, Feedback, Photo
+from .models import Resource, Feedback, Image
 from .filters import ResourceFilter
-from .forms import ResourceForm, FeedbackForm, FeedbackAnonymousForm, PhotoForm
+from .forms import ResourceForm, FeedbackForm, FeedbackAnonymousForm, ImageForm
 
 
 def home(request):
-    resources_list = Resource.objects.filter(photo__is_main=True)
+    resources_list = Resource.objects.filter(image__is_main=True)
     return render(request, 'resources/home.html', { 'resources_list': resources_list })
 
 def resources_list(request):
-    resources_list = Resource.objects.filter(photo__is_main=True)
+    resources_list = Resource.objects.filter(image__is_main=True)
     resource_filter = ResourceFilter(request.GET, queryset=resources_list)
     return render(request, 'resources/resource_list.html', { 'resource_filter': resource_filter })
 
@@ -46,7 +46,7 @@ def resource_detail(request, slug):
 def resource_new(request):
     if request.method == "POST":
         resource_form = ResourceForm(request.POST)
-        image_form = PhotoForm(request.POST)
+        image_form = ImageForm(request.POST, request.FILES)
         if resource_form.is_valid() and image_form.is_valid():
             resource = resource_form.save(commit=False)
 
@@ -54,6 +54,8 @@ def resource_new(request):
                 resource.author = request.user
 
             resource.save()
+
+            image = image_form.save(commit=False)
 
             image.resource = resource
             image.is_main = True
@@ -63,5 +65,5 @@ def resource_new(request):
             return redirect('resource_detail', slug=resource.slug)
     else:
         resource_form = ResourceForm()
-        image_form = PhotoForm()
+        image_form = ImageForm()
     return render(request, 'resources/resource_new.html', { 'resource_form': resource_form, 'image_form': image_form })

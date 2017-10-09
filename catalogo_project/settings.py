@@ -42,7 +42,7 @@ INSTALLED_APPS = [
     'allauth.account',
     'django_filters',
     'widget_tweaks',
-    's3direct',
+    'storages',
 
     'resources',
 ]
@@ -166,18 +166,8 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 
 # s3direct Configs:
-AWS_ACCESS_KEY_ID = os.environ['AWS_ACCESS_KEY_ID']
-AWS_SECRET_ACCESS_KEY = os.environ['AWS_SECRET_ACCESS_KEY']
-AWS_STORAGE_BUCKET_NAME = os.environ['S3_BUCKET']
-S3DIRECT_REGION = 'us-east-1'
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
 
-S3DIRECT_DESTINATIONS = {
-    'image_destination': {
-        'key': 'uploads/images',
-
-        'auth': lambda u: u.is_staff,
-        'allowed': ['image/jpeg', 'image/png'],
-        'cache_control': 'max-age=2592000',
-        'content_disposition': 'attachment',
-    }
-}
+AWS_ACCESS_KEY_ID = 'AKIAJY2RUEGIHZ4DTMAA'
+AWS_SECRET_ACCESS_KEY = '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'
+AWS_STORAGE_BUCKET_NAME = 'nice-catalogo'

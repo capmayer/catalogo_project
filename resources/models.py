@@ -50,11 +50,10 @@ class Resource(models.Model):
     def __str__(self):
         return self.title
 
-class Photo(models.Model):
+class Image(models.Model):
     resource = models.ForeignKey(Resource)
     is_main = models.BooleanField(default=False)
-    image = models.ImageField(upload_to=image_location, null=True, blank=True)
-    image_url = S3DirectField(dest='example_destination', blank=True)
+    image = models.ImageField(upload_to=image_location)
 
 class Feedback(models.Model):
     resource = models.ForeignKey(Resource, on_delete=models.CASCADE)

@@ -17,11 +17,17 @@
           {{ field|add_class:'form-control'}} <br />
         {% endfor %}
 
-        <hr>
+        <hr> -->
 
         {% for field in image_form %}
           <label for="{{ field.id_for_label }}">{{ field.label }}</label>
           {{ field|add_class:'form-control'}} <br />
+        {% endfor %}
+
+        {% for error in image_form.non_field_errors %}
+          <div class="alert alert-danger">
+              <strong>{{ error|escape }}</strong>
+          </div>
         {% endfor %}
 
         <button type="submit" name="form-submit" class="save btn btn-default">Salvar!</button>
