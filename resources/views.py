@@ -34,7 +34,7 @@ def resource_detail(request, slug):
         pro_list = Feedback.objects.filter(resource=resource, is_pro=True)
         con_list = Feedback.objects.filter(resource=resource, is_pro=False)
         try:
-            image = Photo.objects.get(resource=resource, is_main=True)
+            image = Image.objects.get(resource=resource)
         except:
             image = None
         if request.user.is_authenticated:

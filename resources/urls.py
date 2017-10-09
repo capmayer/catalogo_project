@@ -9,4 +9,4 @@ urlpatterns = [
     url(r'^resource/(?P<slug>[\w-]+)/$', views.resource_detail, name='resource_detail'),
     url(r'^all/$', views.resources_list, name='resources_list'),
 
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+] 
