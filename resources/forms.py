@@ -18,6 +18,10 @@ class FeedbackForm(forms.ModelForm):
     class Meta:
         model = Feedback
         fields = ('title', 'description')
+        labels = {
+            'title': 'Título',
+            'description': 'Descrição'
+        }
 
 class FeedbackAnonymousForm(forms.ModelForm):
     class Meta:
