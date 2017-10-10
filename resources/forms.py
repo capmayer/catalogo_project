@@ -1,5 +1,5 @@
 from django import forms
-from .models import Resource, Feedback, Image
+from .models import Resource, Feedback, Image, Tag
 
 class ResourceForm(forms.ModelForm):
     class Meta:
@@ -31,6 +31,14 @@ class FeedbackAnonymousForm(forms.ModelForm):
             'anonymous': 'Nome',
             'title': 'Título',
             'description': 'Descrição'
+        }
+
+class TagForm(forms.ModelForm):
+    class Meta:
+        model = Tag
+        fields = ('name',)
+        labels = {
+            'name': 'Tag'
         }
 
 class ImageForm(forms.ModelForm):

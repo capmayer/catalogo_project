@@ -4,7 +4,7 @@ from django.shortcuts import render, redirect
 from django.forms import modelformset_factory
 from .models import Resource, Feedback, Image
 from .filters import ResourceFilter
-from .forms import ResourceForm, FeedbackForm, FeedbackAnonymousForm, ImageForm
+from .forms import ResourceForm, FeedbackForm, FeedbackAnonymousForm, ImageForm, TagForm
 
 
 def home(request):
@@ -33,7 +33,7 @@ def resource_detail(request, slug):
                 feedback.is_pro = True
             elif 'bad_feedback' in request.POST:
                 feedback.is_pro = False
-            
+
             feedback.save()
             return redirect('resource_detail', slug=slug)
     else:
@@ -53,23 +53,29 @@ def resource_new(request):
     if request.method == "POST":
         resource_form = ResourceForm(request.POST)
         image_form = ImageForm(request.POST, request.FILES)
-        if resource_form.is_valid() and image_form.is_valid():
-            resource = resource_form.save(commit=False)
+        tag_form = TagForm(request.POST)
+        if 'tag_submit' in request.POST:
+            if tag_form.is_valid():
+                tag = tag_form.save()
+        else:
+            if resource_form.is_valid() and image_form.is_valid():
+                resource = resource_form.save(commit=False)
 
-            if request.user.is_authenticated:
-                resource.author = request.user
+                if request.user.is_authenticated:
+                    resource.author = request.user
 
-            resource.save()
+                resource.save()
 
-            image = image_form.save(commit=False)
+                image = image_form.save(commit=False)
 
-            image.resource = resource
-            image.is_main = True
+                image.resource = resource
+                image.is_main = True
 
-            image.save()
+                image.save()
 
-            return redirect('resource_detail', slug=resource.slug)
+                return redirect('resource_detail', slug=resource.slug)
     else:
         resource_form = ResourceForm()
         image_form = ImageForm()
-    return render(request, 'resources/resource_new.html', { 'resource_form': resource_form, 'image_form': image_form })
+        tag_form = TagForm()
+    return render(request, 'resources/resource_new.html', { 'resource_form': resource_form, 'image_form': image_form, 'tag_form': tag_form })
