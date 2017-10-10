@@ -3,7 +3,7 @@
 
 {% block content %}
 <div class="container">
-  <div class="col-lg-8 col-centered">
+  <div class="col-lg-8 margin-top mx-auto">
     <h1>Novo Recurso</h1>
     <form method="POST" class="post-form" enctype='multipart/form-data'>
         {% csrf_token %}
@@ -17,7 +17,7 @@
           {{ field|add_class:'form-control'}} <br />
         {% endfor %}
 
-        <hr> -->
+        <hr>
 
         {% for field in image_form %}
           <label for="{{ field.id_for_label }}">{{ field.label }}</label>
@@ -32,7 +32,6 @@
 
         <button type="submit" name="form-submit" class="save btn btn-default">Salvar!</button>
     </form>
-    {{ image_form.media }}
-</div>
+  </div>
 </div>
 {% endblock %}

@@ -3,79 +3,134 @@
 <title>Teste</title>
 
 {% block content %}
+<div class="container">
+
+      <!-- Portfolio Item Heading -->
+      <h1 class="my-4">{{ resource.title }}
+        {% if resource.author %}
+        <small>por {{ resource.author }}</small>
+        {% endif %}
+      </h1>
+
+      <!-- Portfolio Item Row -->
+      <div class="row">
+
+        <div class="col-md-8">
+          <img class="img-fluid" src="{{ image.image.url }}" alt="">
+        </div>
+
+        <div class="col-md-4">
+          <h3 class="my-3">Descrição:</h3>
+          <p>{{ resource.description }}</p>
+          <h3 class="my-3">Detalhes:</h3>
+          <ul>
+            {% if resource.url %}
+              <li>Acesse em: <a href={{ resource.url }}>{{ resource.url }}</a></li>
+            {% endif %}
+            {% if resource.difficult_student != 'id' %}
+              <li>Dificuldade para o estudante: {{ resource.get_difficult_student_display }}</li>
+            {% endif %}
+            {% if resource.difficult_education != 'id' %}
+              <li>Dificuldade para o docente: {{ resource.get_difficult_education_display }}</li>
+            {% endif %}
+          </ul>
+          {% if resource.tags.all %}
+          <h3>Tags:</h3>
+          <ul>
+            {% for tag in resource.tags.all %}
+              <li>{{ tag.title }}</li>
+            {% endfor %}
+          </ul>
+          {% endif %}
+        </div>
+
+      </div>
+      <!-- /.row -->
+
+      <!-- Related Projects Row
+      <h3 class="my-4">Related Projects</h3>
+
+      <div class="row">
+
+        <div class="col-md-3 col-sm-6 mb-4">
+          <a href="#">
+            <img class="img-fluid" src="http://placehold.it/500x300" alt="">
+          </a>
+        </div>
+
+        <div class="col-md-3 col-sm-6 mb-4">
+          <a href="#">
+            <img class="img-fluid" src="http://placehold.it/500x300" alt="">
+          </a>
+        </div>
+
+        <div class="col-md-3 col-sm-6 mb-4">
+          <a href="#">
+            <img class="img-fluid" src="http://placehold.it/500x300" alt="">
+          </a>
+        </div>
+
+        <div class="col-md-3 col-sm-6 mb-4">
+          <a href="#">
+            <img class="img-fluid" src="http://placehold.it/500x300" alt="">
+          </a>
+        </div>
+
+      </div>
+       /.row -->
+
+    </div>
     <!-- Page Content -->
     <div class="container">
       <div class="col-lg-12">
-
-            <div class="card mt-4">
-              <img class="card-img-top img-fluid" src={{ image.image.url }}>
-              <div class="card-body">
-                <h1 class="card-title">{{ resource.title }}</h1>
-                <hr>
-                <p class="card-text">{{ resource.description }}</p>
-                <hr>
-                <h4>Especificações: </h4>
-                {% if resource.value %}
-                <p>Valor: {{ resource.value }}</p>
-                {% endif %}
-                {% if resource.url %}
-                <p>Link para acessar o recurso: {{ resource.url }}</p>
-                {% endif %}
-                {% if resource.difficult_student != 'id' %}
-                <p>A dificuldade para os estudantes é {{ resource.difficult_student }}</p>
-                {% endif %}
-                {% if resource.difficult_education != 'id' %}
-                <p>A dificuldade para os docentes é {{ resource.difficult_education }}</p>
-                {% endif %}
-                <hr>
-                {% for tag in resource.tags.all %}
-                <h5> {{ tag.name }}</h5>
-                {% endfor %}
-                <!--
-                <span class="text-warning">&#9733; &#9733; &#9733; &#9733; &#9734;</span>
-                4.0 stars -->
-              </div>
-            </div>
-
-
             <div class="row text-center">
-              <div class="card col-lg-6 my-4">
+              <div class="col-md-6 my-4">
                 <div class="card-header">
-                  Pros do Recurso:
+                  <h3>Pros do Recurso:</h3>
                 </div>
                 <div class="card-body">
+                  {% if pro_list %}
                     {% for pro in pro_list %}
                       <p>{{ pro.title }}</p>
                     {% endfor %}
+                  {% else %}
+                    <p>Seja o primeiro a adicionar um feedback positivo!</p>
+                  {% endif %}
                 </div>
                 <button type="submit" class="btn btn-primary" data-toggle="modal" data-target="#myModalGood">Adicione um comentário positivo</button>
               </div>
-              <div class="card col-lg-6  my-4">
+              <div class="col-lg-6  my-4">
                 <div class="card-header">
-                  Contras do Recurso:
+                  <h3>Contras do Recurso:</h3>
                 </div>
                 <div class="card-body">
+                  {% if con_list %}
                     {% for con in con_list %}
                       <p>{{ con.title }}</p>
                     {% endfor %}
+                  {% else %}
+                    <p>Nenhum ponto negativo relatado!</p>
+                  {% endif %}
                 </div>
-                <button type="submit" class="btn btn-primary" data-toggle="modal" data-target="#myModalBad">Adicione um comentário negativo</button>
+                <button type="submit" class="btn btn-danger" data-toggle="modal" data-target="#myModalBad">Adicione um comentário negativo</button>
               </div>
             </div>
+            {% if resource.resources.all %}
+              <h3 class="my-4">Você pode achar esses recursos interessantes também:</h3>
 
-            <div class="card card-outline-secondary mt-4">
-              <div class="card-header">
-                Outros Recursos relacionados:
+              <div class="row">
+                {% for rec in resource.resources.all %}
+                <div class="col-md-3 col-sm-6 mb-4">
+                  <a href="{% url 'resource_detail' slug=rec.slug %}">
+                    <img class="img-fluid" src="{{ rec.image_set.get.image.url }}" alt="">
+                  </a>
+                </div>
+                {% endfor %}
               </div>
-              <div class="card-body">
-                  {% for rec in resource.resources.all %}
-                    <h5><a href="{% url 'resource_detail' slug=rec.slug %}">{{ rec.title }}</a></h5>
-                  {% endfor %}
-              </div>
-            </div>
+            {% endif %}
           </div>
         </div>
-<!-- Popup for feedbacks -->
+
 <div class="modal fade" id="myModalGood" role="dialog">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
@@ -83,14 +138,14 @@
         <button type="button" class="close" data-dismiss="modal">&times;</button>
         <h4 class="modal-title">Feedback Positivo:</h4>
       </div>
-      <form method="POST" class="post-form">
+      <form method="POST" class="post-form form-control">
         <div class="modal-body">
             {% csrf_token %}
             {{ feedback_form.as_p }}
         </div>
         <div class="modal-footer">
-          <button type="submit" name="good_feedback" class="save btn btn-default">Salvar!</button>
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <button type="submit" name="good_feedback" class="save btn btn-primary">Salvar!</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
         </div>
       </form>
     </div>
@@ -103,14 +158,14 @@
         <button type="button" class="close" data-dismiss="modal">&times;</button>
         <h4 class="modal-title">Feedback negativo</h4>
       </div>
-      <form method="POST" class="post-form">
+      <form method="POST" class="post-form form-control">
         <div class="modal-body">
             {% csrf_token %}
             {{ feedback_form.as_p }}
         </div>
         <div class="modal-footer">
-          <button type="submit" name="bad_feedback" class="save btn btn-default">Salvar!</button>
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <button type="submit" name="bad_feedback" class="save btn btn-danger">Salvar!</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
         </div>
       </form>
     </div>

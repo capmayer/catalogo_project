@@ -8,7 +8,8 @@
 body {
   font-size: 20px;
   color: #333333;
-  font-family: 'Lora', 'Times New Roman', serif; }
+  font-family: 'Lora', 'Times New Roman', serif;
+}
 
 p {
   line-height: 1.5;
@@ -287,15 +288,7 @@ header.masthead {
 form .form-group:first-child .floating-label-form-group {
   border-top: 1px solid #eeeeee; }
 
-footer {
-  padding: 50px 0 65px; }
-  footer .list-inline {
-    margin: 0;
-    padding: 0; }
-  footer .copyright {
-    font-size: 14px;
-    margin-bottom: 0;
-    text-align: center; }
+
 
 .btn {
   font-size: 14px;
@@ -351,3 +344,17 @@ footer {
   color: white;
   border: 1px solid #0085A1;
   background-color: #0085A1; }
+
+  body {
+    padding-top: 200px;
+  }
+
+  @media (min-width: 992px) {
+    body {
+      padding-top: 75px;
+    }
+  }
+
+  .margin-top {
+    margin-top: 30px;
+  }

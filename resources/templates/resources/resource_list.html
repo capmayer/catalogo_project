@@ -4,8 +4,8 @@
 {% load widget_tweaks %}
 
     <div class="container">
-      <form method="get">
-        <div class="well">
+      <form class='margin-top' method="get">
+          <h1>Filtrar:</h1>
           <div class="row">
             <div class="form-group col-sm-5 col-md-6">
               {{ resource_filter.form.difficult_student.label_tag }}
@@ -17,7 +17,7 @@
             </div>
           </div>
           <button type="submit" class="btn btn-primary"> <span class="glyphicon glyphicon-search"></span>Procurar</button>
-        </div>
+
 
       </form>
       <hr>
@@ -49,5 +49,5 @@
 
       <hr>
       {% endfor %}
-
+</div>
 {% endblock %}

@@ -4,17 +4,14 @@ from .models import Resource, Feedback, Image
 class ResourceForm(forms.ModelForm):
     class Meta:
         model = Resource
-        fields = ('title', 'description', 'difficult_education', 'difficult_student', 'value', 'url', 'tags', 'languages', 'resources')
+        fields = ('title', 'description', 'difficult_education', 'difficult_student', 'url', 'tags')
         labels = {
             "title": "Título:",
             "description": "Descrição:",
             "difficult_education": "Dificuldade para o educador:",
             "difficult_student": "Dificuldade para o estudante:",
-            "value": "Valor (se houver):",
-            "url": "Link para acessar o recurso (se houver):",
-            "tags": "Tags:",
-            "languages": "Idiomas:",
-            "resources": "Recursos relacionados:"
+            "url": "Link para acessar o recurso:",
+            "tags": "Tags:"
         }
 
 class FeedbackForm(forms.ModelForm):
@@ -26,9 +23,14 @@ class FeedbackAnonymousForm(forms.ModelForm):
     class Meta:
         model = Feedback
         fields = ('anonymous', 'title', 'description')
+        labels = {
+            'anonymous': 'Nome',
+            'title': 'Título',
+            'description': 'Descrição'
+        }
 
 class ImageForm(forms.ModelForm):
     class Meta:
         model = Image
         fields = ('image',)
-        labels = { 'image': 'Imagem'}
+        labels = { 'image': 'Imagem: '}
