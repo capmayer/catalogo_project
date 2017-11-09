@@ -363,3 +363,6 @@ form .form-group:first-child .floating-label-form-group {
     max-width: auto;
     max-height: 400px;
   }
+  .my-image-container {
+    text-align: center;
+  }

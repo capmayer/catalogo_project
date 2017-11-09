@@ -24,7 +24,7 @@
       <!-- Project One -->
       {% for resource in resources_list %}
       <div class="row">
-        <div class="col-md-7 centered">
+        <div class="col-md-7 my-image-container">
           <a href="{% url 'resource_detail' slug=resource.slug %}">
             <img class="img-fluid my-image-thumb" src={{ resource.image_set.get.image.url }} alt="">
           </a>
