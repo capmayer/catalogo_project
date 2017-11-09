@@ -57,7 +57,9 @@
                 <div class="card-body">
                   {% if pro_list %}
                     {% for pro in pro_list %}
-                      <p>{{ pro.title }}</p>
+                      <h5>{{ pro.title }} <small> {% if pro.anonymous %} por {{ pro.anonymous }} {% elif pro.author %} por {{ pro.author }} {% endif %}</small></h5>
+                      <p>{{ pro.description }}</p>
+                      <hr>
                     {% endfor %}
                   {% else %}
                     <p>Seja o primeiro a adicionar um feedback positivo!</p>
@@ -72,7 +74,9 @@
                 <div class="card-body">
                   {% if con_list %}
                     {% for con in con_list %}
-                      <p>{{ con.title }}</p>
+                      <h5>{{ con.title }} <small> {% if con.anonymous %} por {{ con.anonymous }} {% elif con.author %} por {{ con.author }} {% endif %}</small></h5>
+                      <p>{{ con.description }}</p>
+                      <hr>
                     {% endfor %}
                   {% else %}
                     <p>Nenhum ponto negativo relatado!</p>
