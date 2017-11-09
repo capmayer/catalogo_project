@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'django_filters',
     'widget_tweaks',
     'storages',
+    'hitcount',
 
     'resources',
 ]
@@ -122,7 +123,7 @@ USE_TZ = True
 
 # -- NEW TO COMMENT THE LINE ABOVE TO USE LOCAL
 # Change 'default' database configuration with $DATABASE_URL.
-DATABASES['default'] = dj_database_url.config(conn_max_age=500)
+#DATABASES['default'] = dj_database_url.config(conn_max_age=500)
 
 # Honor the 'X-Forwarded-Proto' header for request.is_secure()
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')

@@ -1,6 +1,9 @@
 from django.contrib.auth.models import User
 from django.utils.text import slugify
 from django.db import models
+from django.contrib.contenttypes.fields import GenericRelation
+
+from hitcount.models import HitCount, HitCountMixin
 from autoslug import AutoSlugField
 
 def image_location(instance, filename):
@@ -18,7 +21,7 @@ class Language(models.Model):
     def __str__(self):
         return self.language
 
-class Resource(models.Model):
+class Resource(models.Model, HitCountMixin):
     title = models.CharField(max_length=150)
     description = models.TextField(max_length=500)
 
@@ -45,6 +48,10 @@ class Resource(models.Model):
 
     created_date = models.DateTimeField(auto_now_add=True)
     last_modified_date = models.DateTimeField(auto_now=True, auto_now_add=False)
+
+    hit_count_generic = GenericRelation(
+        HitCount, object_id_field='object_pk',
+        related_query_name='hit_count_generic_relation')
 
     def __str__(self):
         return self.title

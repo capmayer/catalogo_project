@@ -2,13 +2,15 @@ import json, boto3
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.forms import modelformset_factory
+from hitcount.models import HitCount
+from hitcount.views import HitCountMixin
 from .models import Resource, Feedback, Image
 from .filters import ResourceFilter
 from .forms import ResourceForm, FeedbackForm, FeedbackAnonymousForm, ImageForm, TagForm
 
 
 def home(request):
-    resources_list = Resource.objects.filter(image__is_main=True)
+    resources_list = Resource.objects.filter(image__is_main=True).order_by("-created_date")
     return render(request, 'resources/home.html', { 'resources_list': resources_list })
 
 def resources_list(request):
@@ -17,7 +19,14 @@ def resources_list(request):
     return render(request, 'resources/resource_list.html', { 'resource_filter': resource_filter })
 
 def resource_detail(request, slug):
+    # get the specified resource
     resource = Resource.objects.get(slug=slug)
+
+    # count the views of a resource
+    hit_count = HitCount.objects.get_for_object(resource)
+    hit_count_response = HitCountMixin.hit_count(request, hit_count)
+
+    # check method
     if request.method == "POST":
         if request.user.is_authenticated:
             form = FeedbackForm(request.POST)
