@@ -34,9 +34,9 @@
       <!-- Project One -->
       {% for resource in resource_filter.qs %}
       <div class="row">
-        <div class="col-md-7 my-image-thumb">
-          <a href="#">
-            <img class="img-fluid rounded mb-3 mb-md-0" src={{ resource.image_set.get.image.url }} alt="">
+        <div class="col-md-7 centered">
+          <a href="{% url 'resource_detail' slug=resource.slug %}">
+            <img class="img-fluid my-image-thumb" src={{ resource.image_set.get.image.url }} alt="">
           </a>
         </div>
         <div class="col-md-5">

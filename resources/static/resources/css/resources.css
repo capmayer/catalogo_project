@@ -360,6 +360,6 @@ form .form-group:first-child .floating-label-form-group {
   }
 
   .my-image-thumb {
-    max-width: 700px;
-    height: 500px;
+    max-width: auto;
+    max-height: 400px;
   }
