@@ -358,3 +358,8 @@ form .form-group:first-child .floating-label-form-group {
   .margin-top {
     margin-top: 30px;
   }
+
+  .my-image-thumb {
+    max-width: 700px;
+    height: 500px;
+  }
