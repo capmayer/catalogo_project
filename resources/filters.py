@@ -3,12 +3,21 @@ import django_filters
 
 class ResourceFilter(django_filters.FilterSet):
     title = django_filters.CharFilter(lookup_expr='icontains')
+
+    ordering = django_filters.OrderingFilter(
+        # tuple-mapping retains order
+        fields=(
+            ('created_date', 'created_date'),
+
+        )
+    )
+
     class Meta:
         model = Resource
         fields = {
             'difficult_education':['exact'],
             'difficult_student':['exact'],
-            'languages':['exact'],
+            'languages':['exact'], 'ordering':['exact'],
         }
         labels = {
             "difficult_education": "Dificuldade para o educador:",

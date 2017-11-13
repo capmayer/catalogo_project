@@ -30,6 +30,12 @@
           </div>
       </form>
       <hr>
+      <div class="row ordering">
+        <div class="col-md-3">
+          {{ resource_filter.form.ordering.label_tag }}
+          {% render_field resource_filter.form.ordering class="form-control" %}
+        </div>
+      </div>
       <!-- Page Heading -->
       <!--
       <div id="wrapper-filter">

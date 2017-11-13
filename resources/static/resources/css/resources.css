@@ -368,7 +368,12 @@ form .form-group:first-child .floating-label-form-group {
   }
 
   .buttons {
-    display: flex; 
+    display: flex;
     justify-content: flex-end;
     margin-bottom: 15px;
+  }
+  .ordering {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 50px;
   }
