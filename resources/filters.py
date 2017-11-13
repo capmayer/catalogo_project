@@ -7,7 +7,7 @@ class ResourceFilter(django_filters.FilterSet):
     ordering = django_filters.OrderingFilter(
         # tuple-mapping retains order
         fields=(
-            ('created_date', 'created_date'),
+            ('created_date', 'Data de Criação'),
 
         )
     )
