@@ -366,3 +366,9 @@ form .form-group:first-child .floating-label-form-group {
   .my-image-container {
     text-align: center;
   }
+
+  .buttons {
+    display: flex; 
+    justify-content: flex-end;
+    margin-bottom: 15px;
+  }
