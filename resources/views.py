@@ -1,9 +1,13 @@
 import json, boto3
+
+from django.core.serializers import serialize
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.forms import modelformset_factory
+
 from hitcount.models import HitCount
 from hitcount.views import HitCountMixin
+
 from .models import Resource, Feedback, Image
 from .filters import ResourceFilter
 from .forms import ResourceForm, FeedbackForm, FeedbackAnonymousForm, ImageForm, TagForm
@@ -88,3 +92,7 @@ def resource_new(request):
         image_form = ImageForm()
         tag_form = TagForm()
     return render(request, 'resources/resource_new.html', { 'resource_form': resource_form, 'image_form': image_form, 'tag_form': tag_form })
+
+def resource_all(request):
+    resources = serialize("json", Resource.objects.filter(image__is_main=True))
+    return HttpResponse(resources, content_type="application/json")
