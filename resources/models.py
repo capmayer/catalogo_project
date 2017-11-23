@@ -3,6 +3,8 @@ from django.utils.text import slugify
 from django.db import models
 from django.contrib.contenttypes.fields import GenericRelation
 
+import uuid
+
 from hitcount.models import HitCount, HitCountMixin
 from autoslug import AutoSlugField
 
@@ -62,12 +64,16 @@ class Image(models.Model):
     image = models.ImageField(upload_to=image_location)
 
 class Feedback(models.Model):
+    uuid = models.UUIDField(default=uuid.uuid4, editable=False)
     resource = models.ForeignKey(Resource, on_delete=models.CASCADE)
     author = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
     anonymous = models.CharField(max_length=50, null=True, blank=True)
     title = models.CharField(max_length=150)
     description = models.TextField(max_length=255)
     is_pro = models.BooleanField(default=True)
+
+    good_avaliations = models.IntegerField()
+    bad_avaliations = models.IntegerField()
 
     created_date = models.DateTimeField(auto_now_add=True, null=True)
 
