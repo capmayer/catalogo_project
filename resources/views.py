@@ -1,9 +1,13 @@
 import json, boto3
 
 from django.core.serializers import serialize
-from django.http import HttpResponse
+from django.http import HttpResponse, Http404
 from django.shortcuts import render, redirect
 from django.forms import modelformset_factory
+
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import status
 
 from hitcount.models import HitCount
 from hitcount.views import HitCountMixin
@@ -11,7 +15,7 @@ from hitcount.views import HitCountMixin
 from .models import Resource, Feedback, Image
 from .filters import ResourceFilter
 from .forms import ResourceForm, FeedbackForm, FeedbackAnonymousForm, ImageForm, TagForm
-
+from .serializers import ResourceSerializer, FeedbackSerializer
 
 def home(request):
     resources_list = Resource.objects.filter(image__is_main=True).order_by("-created_date")
@@ -94,5 +98,81 @@ def resource_new(request):
     return render(request, 'resources/resource_new.html', { 'resource_form': resource_form, 'image_form': image_form, 'tag_form': tag_form })
 
 def resource_all(request):
-    resources = serialize("json", Resource.objects.filter(image__is_main=True))
+    resources = serialize("json", Resource.objects.all())
     return HttpResponse(resources, content_type="application/json")
+
+class ResourceList(APIView):
+    def get(self, request, format=None):
+        resources = Resource.objects.all()
+        serializer = ResourceSerializer(resources, many=True)
+        return Response(serializer.data, content_type="application/json")
+
+    def post(self, request, format=None):
+        serializer = ResourceSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+class ResourceDetail(APIView):
+    def get_object(self, slug):
+        try:
+            return Resource.objects.get(slug=slug)
+        except Resource.DoesNotExist:
+            raise Http404
+
+    def get(self, request, slug, format=None):
+        resource = self.get_object(slug)
+        serializer = ResourceSerializer(resource)
+        return Response(serializer.data, content_type="application/json")
+
+    def put(self, request, slug, format=None):
+        resource = self.get_object(slug)
+        serializer = ResourceSerializer(resource, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, content_type="application/json")
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def delete(self, request, slug, format=None):
+        resource = self.get_object(slug)
+        resource.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
+class FeedbackList(APIView):
+    def get(self, request, format=None):
+        feedbacks = Feedback.objects.all()
+        serializer = FeedbackSerializer(feedbacks, many=True)
+        return Response(serializer.data, content_type="application/json")
+
+    def post(self, request, format=None):
+        serializer = FeedbackSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+class FeedbackDetail(APIView):
+    def get_object(self, uuid):
+        try:
+            return Feedback.objects.get(uuid=uuid)
+        except Feedback.DoesNotExist:
+            raise Http404
+
+    def get(self, request, uuid, format=None):
+        feedback = self.get_object(uuid)
+        serializer = FeedbackSerializer(feedback)
+        return Response(serializer.data, content_type="application/json")
+
+    def put(self, request, uuid, format=None):
+        feedback = self.get_object(uuid)
+        serializer = FeedbackSerializer(feedback, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, content_type="application/json")
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def delete(self, request, uuid, format=None):
+        feedback = self.get_object(uuid)
+        feedback.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)

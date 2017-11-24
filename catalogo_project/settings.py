@@ -44,6 +44,8 @@ INSTALLED_APPS = [
     'widget_tweaks',
     'storages',
     'hitcount',
+    'rest_framework',
+    'markdown',
 
     'resources',
 ]
