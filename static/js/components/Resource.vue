@@ -1,13 +1,14 @@
 <template>
   <div id="resource">
-    <h1>Filtre os Recursos:</h1>
-    <div class="container-fluid">
+    <div class="container-fluid margin-top">
+      <div class="row">
+        <hr>
+      </div>
       <div class="row">
         <div class="col-md-3">
-
             <h1 >Filtros</h1>
             <hr>
-            <b-form-input type="text" v-model="searchFilter" placeholder="Search for..." /></b-form-input>
+            <b-form-input type="text" v-model="searchFilter" placeholder="Filtrar pelo nome..." /></b-form-input>
             <b-form-radio-group id="btnradios1"
                         buttons
                         v-model="difficultStudentSelected"
@@ -18,7 +19,7 @@
           <b-card-group deck>
             <div v-for="resource in listFilter">
               <b-card :title=resource.title
-                  :img-src=imageUrl(image)
+                  :img-src=imageUrl(resource.image_set[0])
                   img-alt="Image"
                   img-top
                   tag="article"
@@ -90,7 +91,7 @@ export default {
         this.sortDirection = "desc"
       }
 
-      this.listFilter = _.orderBy(this.listFilter, campo, this.sortDirection)
+      this.listFilter = _.orderBy(this.listSave, campo, this.sortDirection)
 
     },
     imageUrl(image){
@@ -108,7 +109,7 @@ export default {
 </script>
 
 <style>
-  #exemplo{
-      color: red;
+  .margin-top{
+    margin-top: 50px;
   }
 </style>

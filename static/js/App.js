@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import VueResource from 'vue-resource'
 import Resource from './components/Resource.vue'
+import Homepage from './components/Homepage.vue'
 import lodash from 'lodash'
 import BootstrapVue from 'bootstrap-vue'
 
@@ -12,8 +13,8 @@ import 'bootstrap-vue/dist/bootstrap-vue.css'
 Vue.use(VueResource, lodash)
 
 Vue.use(BootstrapVue)
-
 Vue.use(Card)
-Vue.use(FormRadio);
+Vue.use(FormRadio)
 
-new Vue(Resource).$mount(".resource")
+new Vue(Resource).$mount('.resource')
+new Vue(Homepage).$mount('.homepage')

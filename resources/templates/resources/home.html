@@ -1,41 +1,5 @@
 {% extends "resources/base.html" %}
-
-<title>Teste</title>
-
 {% block content %}
-    <!-- Page Content -->
-  <header class="masthead" style="background-image: url('static/resources/img/kids.jpg')">
-    <div class="container-fluid">
-      <div class="row">
-        <div class="col mx-auto">
-          <div class="site-heading">
-            <h1>Catalogy</h1>
-            <span class="subheading">Encontre o recurso certo para sua aula.</span>
-            <span><a class="btn btn-primary margin-top" href="{% url 'resources_list' %}">Buscar</a></span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </header>
-  <div class="container">
-
-      <!-- Page Heading -->
-      <h1 class="my-4">Recursos</h1>
-      <!-- Project One -->
-      {% for resource in resources_list %}
-      <div class="row">
-        <div class="col-md-7 my-image-container">
-          <a href="{% url 'resource_detail' slug=resource.slug %}">
-            <img class="img-fluid my-image-thumb" src={{ resource.image_set.get.image.url }} alt="">
-          </a>
-        </div>
-        <div class="col-md-5">
-          <h3>{{ resource.title }}</h3>
-          <p>{{ resource.description }}</p>
-          <a class="btn btn-primary" href="{% url 'resource_detail' slug=resource.slug %}">View Project</a>
-        </div>
-      </div>
-      <hr>
-      {% endfor %}
- </div>
+<div class="homepage">
+</div>
 {% endblock %}
