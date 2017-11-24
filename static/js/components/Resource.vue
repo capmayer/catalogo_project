@@ -21,8 +21,7 @@
               <b-card :title=resource.title
                   :img-src=imageUrl(resource.image_set[0])
                   img-alt="Image"
-                  img-top
-                  tag="article"
+                  img-top rounded height="300"
                   style="max-width: 40rem;"
                   class="mb-4">
                 <p class="card-text">
