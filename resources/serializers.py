@@ -9,7 +9,7 @@ class ImageSerializer(serializers.ModelSerializer):
 
 class ResourceSerializer(serializers.ModelSerializer):
     image_set = ImageSerializer(many=True)
-
+        
     class Meta:
         model = Resource
         fields = ('title', 'description', 'slug', 'languages', 'url', 'resources', 'image_set', 'difficult_student')

@@ -1,21 +1,6 @@
 <template>
   <div id="homepage">
-    <div class="margin-top">
-    <b-carousel id="carousel1"
-                style="text-shadow: 1px 1px 2px #333;"
-                controls
-                indicators
-                background="#ababab"
-                :interval="4000"
-                img-width="1024"
-                img-height="480"
-                v-model="slide"
-    >
-    <b-carousel-slide caption="First slide"
-                      text="Nulla vitae elit libero, a pharetra augue mollis interdum."
-                      img-src="https://lorempixel.com/1024/480/technics/2/"
-    ></b-carousel-slide>
-    </b-carousel>
+    <b-img src="/static/resources/img/kids.jpg" fluid alt="Responsive image" />
   </div>
   </div>
 </template>
@@ -24,7 +9,6 @@
 export default {
   data() {
     return {
-      sortDirection: '',
     }
   }
 }

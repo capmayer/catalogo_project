@@ -2,6 +2,7 @@ import Vue from 'vue'
 import VueResource from 'vue-resource'
 import Resource from './components/Resource.vue'
 import Homepage from './components/Homepage.vue'
+import ResourceDetail from './components/ResourceDetail.vue'
 import lodash from 'lodash'
 import BootstrapVue from 'bootstrap-vue'
 import Icon from 'vue-awesome'
@@ -20,3 +21,4 @@ Vue.use(FormRadio)
 
 new Vue(Resource).$mount('.resource')
 new Vue(Homepage).$mount('.homepage')
+new Vue(ResourceDetail).$mount('.resource-detail')

@@ -36,9 +36,9 @@
           <b-card-group deck>
             <div v-for="resource in listFilter">
               <b-card no-body img-top
-                  style="max-width: 40rem;"
-                  class="mb-4">
-                <b-img rounded width="400" height="300" :src=imageUrl(resource.image_set[0]) alt="img" />
+                  style="max-width: 30rem;"
+                  class="mb-3">
+                <b-img rounded width="450" height="300" :src=imageUrl(resource.image_set[0]) alt="img" />
 
                 <b-card-body>
                   <h4>{{ resource.title }}</h4>
