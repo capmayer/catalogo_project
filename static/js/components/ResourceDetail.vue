@@ -6,7 +6,7 @@
           <b-card no-body img-top
               style="max-width: 30rem;"
               class="mb-3">
-            <b-img rounded width="440" height="300" :src=imageUrl(resource.image_set) alt="img" />
+            <b-img rounded width="440" height="300" :src=imageUrl(resource.image_set[0]) alt="img" />
 
             <b-card-body>
               <h4>{{ resource.title }}</h4>
