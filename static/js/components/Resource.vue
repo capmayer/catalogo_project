@@ -49,11 +49,11 @@
                     <div class="col-md-8">
                       <div class="row">
                         <icon name="thumbs-o-up" class="margin-15 blue" scale="1.5"></icon>
-                        <h4 class="margin-left margin-right blue">10</h4>
+                        <h4 class="margin-left margin-right blue">{{ resource.likes.length }}</h4>
                         <icon name="thumbs-o-down" class="margin-left red" scale="1.5"></icon>
-                        <h4 class="margin-left margin-right red">10</h4>
+                        <h4 class="margin-left margin-right red">{{ resource.deslikes.length }}</h4>
                         <icon name="comment-o" class="margin-left" scale="1.5"></icon>
-                        <h4 class="margin-left">10</h4>
+                        <h4 class="margin-left">{{ resource.feedback_set.length }}</h4>
                       </div>
                     </div>
                     <div class="col-md-3">
