@@ -15,7 +15,7 @@ from hitcount.views import HitCountMixin
 from .models import Resource, Feedback, Image
 from .filters import ResourceFilter
 from .forms import ResourceForm, FeedbackForm, FeedbackAnonymousForm, ImageForm, TagForm
-from .serializers import ResourceSerializer, FeedbackSerializer
+from .serializers import ResourceSerializer, FeedbackSerializer, LikeSerializer, DeslikeSerializer
 
 def home(request):
     resources_list = Resource.objects.filter(image__is_main=True).order_by("-created_date")
@@ -139,6 +139,12 @@ class ResourceDetail(APIView):
         resource.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
+class ResourceFeedbackList(APIView):
+    def get(self, request, slug, format=None):
+        feedbacks = Feedback.objects.filter(resource__slug=slug)
+        serializer = FeedbackSerializer(feedbacks, many=True)
+        return Response(serializer.data, content_type="application/json")
+
 class FeedbackList(APIView):
     def get(self, request, format=None):
         feedbacks = Feedback.objects.all()
@@ -146,6 +152,7 @@ class FeedbackList(APIView):
         return Response(serializer.data, content_type="application/json")
 
     def post(self, request, format=None):
+        print(request.data)
         serializer = FeedbackSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
@@ -176,3 +183,11 @@ class FeedbackDetail(APIView):
         feedback = self.get_object(uuid)
         feedback.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+class LikeList(APIView):
+    def post(self, request, format=None):
+        serializer = LikesSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

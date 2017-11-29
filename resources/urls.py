@@ -10,7 +10,9 @@ urlpatterns = [
     url(r'^$', views.home, name='home'),
 
     url(r'^api/resource/$', views.ResourceList.as_view()),
+    url(r'^api/resource/(?P<slug>[\w-]+)/feedback/$', views.ResourceFeedbackList.as_view()),
     url(r'^api/resource/(?P<slug>[\w-]+)/$', views.ResourceDetail.as_view()),
+
 
     url(r'^api/feedback/$', views.FeedbackList.as_view()),
     url(r'^api/feedback/(?P<uuid>[^/]+)/$', views.FeedbackDetail.as_view()),

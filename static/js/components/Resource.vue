@@ -36,7 +36,7 @@
           <b-card-group deck>
             <div v-for="resource in listFilter">
               <b-card no-body img-top
-                  style="max-width: 30rem;"
+                  style="max-width: 28rem;"
                   class="mb-3">
                 <b-img rounded width="450" height="300" :src=imageUrl(resource.image_set[0]) alt="img" />
 
@@ -49,15 +49,17 @@
                     <div class="col-md-8">
                       <div class="row">
                         <icon name="thumbs-o-up" class="margin-15 blue" scale="1.5"></icon>
-                        <h4 class="margin-left margin-right blue">{{ resource.likes.length }}</h4>
+                        <h4 class="margin-left margin-right blue">{{ resource.likes_count }}</h4>
                         <icon name="thumbs-o-down" class="margin-left red" scale="1.5"></icon>
-                        <h4 class="margin-left margin-right red">{{ resource.deslikes.length }}</h4>
+                        <h4 class="margin-left margin-right red">{{ resource.deslikes_count }}</h4>
                         <icon name="comment-o" class="margin-left" scale="1.5"></icon>
-                        <h4 class="margin-left">{{ resource.feedback_set.length }}</h4>
+                        <h4 class="margin-left">{{ resource.feedback_count }}</h4>
                       </div>
                     </div>
                     <div class="col-md-3">
-                      <a :href=resourceUrl(resource.slug)><b-button variant="primary">detalhes</b-button></a>
+                      <div class="row margin-20">
+                          <a :href=resourceUrl(resource.slug)><b-button variant="primary">detalhes</b-button></a>
+                      </div>
                     </div>
                   </div>
                 </b-card-body>
@@ -160,6 +162,9 @@ export default {
   }
   .margin-15{
     margin-left: 15px;
+  }
+  .margin-20{
+    margin-left: 25px;
   }
   .margin-right{
     margin-right: 20px;
