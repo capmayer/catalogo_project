@@ -146,6 +146,7 @@ export default {
           { text: 'Recomendaria!', value:true},
           { text: 'Não recomendaria!', value:false},
       ],
+      token: '',
     }
   },
   mounted(){
