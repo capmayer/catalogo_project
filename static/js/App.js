@@ -7,7 +7,7 @@ import lodash from 'lodash'
 import BootstrapVue from 'bootstrap-vue'
 import Icon from 'vue-awesome'
 
-import { Card, FormRadio, Form, FormInput, FormTextarea, Button } from 'bootstrap-vue/es/components';
+import { Card, FormRadio, Form, FormInput, FormTextarea, Button, Collapse } from 'bootstrap-vue/es/components';
 
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
@@ -22,6 +22,11 @@ Vue.use(FormInput)
 Vue.use(Form)
 Vue.use(FormTextarea)
 Vue.use(Button)
+Vue.use(Collapse)
+
+var VueCookie = require('vue-cookie');
+// Tell Vue to use the plugin
+Vue.use(VueCookie);
 
 new Vue(Resource).$mount('.resource')
 new Vue(Homepage).$mount('.homepage')

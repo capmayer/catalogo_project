@@ -101,7 +101,8 @@ export default {
     }
   },
   mounted() {
-    this.$http.get("/api/resource/?format=json").then( (req) => this.listSave = req.data = this.listFilter = req.data )
+    if(window.location.pathname == '/all/')
+      this.$http.get("/api/resource/?format=json").then( (req) => this.listSave = req.data = this.listFilter = req.data )
   },
   watch: {
     difficultStudentSelected(val){

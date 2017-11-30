@@ -146,16 +146,16 @@ export default {
           { text: 'Recomendaria!', value:true},
           { text: 'Não recomendaria!', value:false},
       ],
-      token: '',
     }
   },
   mounted(){
-    if(window.location.pathname == '/all/')
-      return 0
-    else {
-      this.$http.get("/api"+window.location.pathname+"?format=json").then( (req) => this.resource = req.data )
+    if(window.location.pathname.includes("resource/")){
+      this.$http.get("/api"+window.location.pathname+"?format=json").then((req) => {
+         this.resource = req.data
+      })
       this.$http.get("/api"+window.location.pathname+"feedback/?format=json").then( (req) => this.feedbacks = req.data )
     }
+
 
   },
   methods:{
@@ -185,8 +185,9 @@ export default {
         'is_pro': this.is_pro,
         'author': '',
       }
-      this.$http.post("/api/feedback/", this.feedbackData).then( (req) => console.log(req.data) );
-    }
+      this.$http.post("/api/feedback/", this.feedbackData, { headers: { 'X-CSRF-TOKEN': this.$cookie.get('csrftoken')}}).then( (req) => console.log(req.data) );
+      this.hideModal()
+    },
   }
 }
 </script>
