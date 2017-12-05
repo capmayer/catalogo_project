@@ -178,3 +178,5 @@ AWS_STORAGE_BUCKET_NAME = 'nice-catalogo'
 
 CSRF_USE_SESSIONS = True
 SESSION_ENGINE = 'django.contrib.sessions.backends.signed_cookies'
+
+HITCOUNT_KEEP_HIT_ACTIVE = { 'days': 3 }

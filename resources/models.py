@@ -63,7 +63,7 @@ class Resource(models.Model, HitCountMixin):
     last_modified_date = models.DateTimeField(auto_now=True, auto_now_add=False)
 
     hit_count_generic = GenericRelation(
-        HitCount, object_id_field='object_pk',
+        HitCount, object_id_field='id',
         related_query_name='hit_count_generic_relation')
 
     def __str__(self):

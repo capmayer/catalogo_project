@@ -29,42 +29,8 @@ def resources_list(request):
 def resource_detail(request, slug):
     # get the specified resource
     resource = Resource.objects.get(slug=slug)
-
-    # count the views of a resource
-    hit_count = HitCount.objects.get_for_object(resource)
-    hit_count_response = HitCountMixin.hit_count(request, hit_count)
-
-    # check method
-    if request.method == "POST":
-        if request.user.is_authenticated:
-            form = FeedbackForm(request.POST)
-        else:
-            form = FeedbackAnonymousForm(request.POST)
-        if form.is_valid():
-            feedback = form.save(commit=False)
-            if request.user.is_authenticated:
-                feedback.author = request.user
-
-            feedback.resource = resource
-            if 'good_feedback' in request.POST:
-                feedback.is_pro = True
-            elif 'bad_feedback' in request.POST:
-                feedback.is_pro = False
-
-            feedback.save()
-            return redirect('resource_detail', slug=slug)
-    else:
-        pro_list = Feedback.objects.filter(resource=resource, is_pro=True)
-        con_list = Feedback.objects.filter(resource=resource, is_pro=False)
-        try:
-            image = Image.objects.get(resource=resource)
-        except:
-            image = None
-        if request.user.is_authenticated:
-            feedback_form = FeedbackForm()
-        else:
-            feedback_form = FeedbackAnonymousForm()
-        return render(request, 'resources/resource_detail.html', { 'resource': resource, 'pro_list': pro_list, 'con_list': con_list, 'feedback_form': feedback_form, 'image': image })
+    
+    return render(request, 'resources/resource_detail.html', {})
 
 def resource_new(request):
     if request.method == "POST":
