@@ -35,7 +35,7 @@
                 <v-card-text>
                   <v-layout row>
                     <v-avatar size="100px" class="mr-3">
-                      <img src="/static/resources/img/nopic.png" alt="avatar">
+                      <img :src=imageUrl(resource.image_set[0]) alt="avatar">
                     </v-avatar>
                     <v-text-field
                       name="input-1"
@@ -112,8 +112,7 @@
                             <v-flex xs11>
                               <v-layout row wrap>
                                 <v-flex xs3>
-                                  <h4 :v-if=feedback.anonymous>{{ feedback.anonymous }}</h4>
-                                  <h4 :v-else=feedback.author>{{ feedback.author.username }}</h4>
+                                  <h4>{{ feedback.author.username }}</h4>
                                 </v-flex>
                                 <v-flex xs9>
                                   <!-- fure work, last edit -->
