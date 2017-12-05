@@ -27,7 +27,7 @@
           Login
         </v-btn>
       </v-toolbar>
-      <v-container fluid>
+      <v-container fluid class="cyan lighten-4">
         <v-container class="mt-5">
           <v-layout row wrap>
             <v-flex xs10>
@@ -113,7 +113,7 @@
                               <v-layout row wrap>
                                 <v-flex xs3>
                                   <h4 :v-if=feedback.anonymous>{{ feedback.anonymous }}</h4>
-                                  <h4 :v-else=feedback.author.username>{{ feedback.author.username }}</h4>
+                                  <h4 :v-else=feedback.author>{{ feedback.author.username }}</h4>
                                 </v-flex>
                                 <v-flex xs9>
                                   <!-- fure work, last edit -->

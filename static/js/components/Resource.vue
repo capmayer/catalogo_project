@@ -37,7 +37,7 @@
           Login
         </v-btn>
       </v-toolbar>
-      <v-container fluid>
+      <v-container fluid class="cyan lighten-4">
         <v-container grid-list-lg>
           <v-layout row wrap>
             <v-flex xs12>
