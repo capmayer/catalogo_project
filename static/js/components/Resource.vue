@@ -114,8 +114,6 @@ export default {
         this.listFilter = this.listSave.filter(item => { return item.difficult_student == 'av'})
         this.difMe = false
         this.difIn = false
-      }else{
-        this.listFilter = this.listSave.filter(item => { return item.difficult_student != 'av'})
       }
     },
     difMe(val){
@@ -123,8 +121,6 @@ export default {
         this.listFilter = this.listSave.filter(item => { return item.difficult_student == 'me'})
         this.difAv = false
         this.difIn = false
-      }else{
-        this.listFilter = this.listSave.filter(item => { return item.difficult_student != 'me'})
       }
     },
     difIn(val){
@@ -132,8 +128,6 @@ export default {
         this.listFilter = this.listSave.filter(item => { return item.difficult_student == 'in'})
         this.difMe = false
         this.difAv = false
-      }else{
-        this.listFilter = this.listSave.filter(item => { return item.difficult_student != 'in'})
       }
     },
     language(val){
