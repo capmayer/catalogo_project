@@ -1,74 +1,87 @@
 <template>
   <div id="resource">
-    <div class="container-fluid margin-top">
-      <div class="row">
-        <hr>
-      </div>
-      <div class="row">
-        <div class="col-md-3">
-          <div class="row margin-left">
-            <icon name="filter" scale="1.7"></icon><h3 class="margin-left">Filtros</h3>
-          </div>
-          <hr>
-          <b-input-group>
-            <b-input-group-addon><icon name="search"></icon></b-input-group-addon>
-            <b-form-input type="search" v-model="searchFilter" placeholder="Filtrar pelo nome..."/></b-form-input></b-col>
-          </b-input-group>
-          <hr>
-          <h3>Nível de engajamento:</h3>
-          <b-form-radio-group id="btnradios1"
-                        buttons
-                        v-model="difficultStudentSelected"
-                        :options="options"
-                        name="radiosBtnDefault" />
-          <hr>
-          <b-input-group>
-            <b-input-group-addon><icon name="globe"></icon></b-input-group-addon>
-            <b-form-select v-model="language" :options="languageOptions">
-            </b-form-select>
-          </b-input-group>
-          <hr>
-          <h3 class="center">Caracteristicas</h3>
-          <b-form-checkbox-group v-model="featuresSelected" stacked :options="featuresOptions">
-          </b-form-checkbox-group>
-        </div>
-        <div class="col-md-9">
-          <b-card-group deck>
-            <div v-for="resource in listFilter">
-              <b-card no-body img-top
-                  style="max-width: 28rem;"
-                  class="mb-3">
-                <b-img rounded width="450" height="300" :src=imageUrl(resource.image_set[0]) alt="img" />
+    <v-app>
+      <v-navigation-drawer
+        clipped
+        fixed
+        v-model="drawer"
+        app>
+        <v-subheader>Filtrar</v-subheader>
+        <div class="pa-2">
+            <v-text-field
+              v-model="searchFilter"
+              label="Nome"
+              single-line
+              prepend-icon="search">
+            </v-text-field>
 
-                <b-card-body>
-                  <h4>{{ resource.title }}</h4>
-                  <p class="card-text">
-                    {{ resource.description }}
-                  </p>
-                  <div class="row">
-                    <div class="col-md-8">
-                      <div class="row">
-                        <icon name="thumbs-o-up" class="margin-15 blue" scale="1.5"></icon>
-                        <h4 class="margin-left margin-right blue">{{ resource.likes_count }}</h4>
-                        <icon name="thumbs-o-down" class="margin-left red" scale="1.5"></icon>
-                        <h4 class="margin-left margin-right red">{{ resource.deslikes_count }}</h4>
-                        <icon name="comment-o" class="margin-left" scale="1.5"></icon>
-                        <h4 class="margin-left">{{ resource.feedback_count }}</h4>
-                      </div>
-                    </div>
-                    <div class="col-md-3">
-                      <div class="row margin-20">
-                          <a :href=resourceUrl(resource.slug)><b-button variant="primary">detalhes</b-button></a>
-                      </div>
-                    </div>
-                  </div>
-                </b-card-body>
-              </b-card>
-            </div>
-          </b-card-group>
+            <v-select
+              v-bind:items="languageOptions"
+              v-model="language"
+              label="Idioma"
+              single-line
+              prepend-icon="map">
+            </v-select>
         </div>
-      </div>
-    </div>
+        <v-subheader>Engajamento</v-subheader>
+        <div class="pa-2">
+          <v-switch label="Fácil" v-model="difficultStudentSelected" value="in"></v-switch>
+          <v-switch label="Mediano" v-model="difficultStudentSelected" value="me"></v-switch>
+          <v-switch label="Difícil" v-model="difficultStudentSelected" value="av"></v-switch>
+        </div>
+      </v-navigation-drawer>
+      <v-toolbar class="white" app fixed clipped-left>
+        <v-toolbar-title v-text="title"></v-toolbar-title>
+        <v-spacer></v-spacer>
+        <v-btn icon>
+          <v-icon>search</v-icon>
+        </v-btn>
+        <v-btn icon>
+          <v-icon>apps</v-icon>
+        </v-btn>
+        <v-btn icon>
+          <v-icon>refresh</v-icon>
+        </v-btn>
+        <v-btn icon>
+          <v-icon>more_vert</v-icon>
+        </v-btn>
+      </v-toolbar>
+      <v-container fluid class="red">
+        <v-container grid-list-lg class="blue">
+          <v-layout row wrap>
+            <v-flex xs12>
+              <h5> Recursos </h5>
+            </v-flex>
+          </v-layout>
+          <v-layout row wrap>
+            <v-flex
+              xs6
+              v-for="(resource, index) in listFilter"
+              :key="index">
+              <v-card contain>
+                <v-card-media
+                  :src=imageUrl(resource.image_set[0])
+                  height="200px">
+                </v-card-media>
+                <v-card-title primary-title>
+                  <div>
+                    <div class="headline">{{ resource.title }}</div>
+                    <span class="grey--text">{{ resource.description }}</span>
+                  </div>
+                </v-card-title>
+                <v-card-actions>
+
+                  <v-spacer></v-spacer>
+                  <!-- <v-btn flat>Compartilhar</v-btn>  futures work -->
+                  <v-btn :href=resourceUrl(resource.slug) > Ver mais</v-btn>
+
+                </v-card-actions>
+              </v-card>
+            </v-flex>
+          </v-layout>
+        </v-container>
+      </v-container>
+    </v-app>
   </div>
 </template>
 
@@ -77,6 +90,9 @@
 export default {
   data() {
     return {
+      show: '',
+      title: "Catalogy",
+      drawer: null,
       sortDirection: 'desc',
       searchFilter: '',
       listSave: [],
@@ -87,17 +103,7 @@ export default {
         { text: 'Inglês', value:'en-us' },
       ],
       featuresSelected: [],
-      featuresOptions: [
-        { text: 'Computador', value: 'computador' },
-        { text: 'Projetor', value: 'projetor' },
-        { text: 'Ferramentas', value: 'ferramentas' },
-      ],
-      difficultStudentSelected: 'in',
-      options: [
-        { text: 'Fácil', value: 'in' },
-        { text: 'Mediano', value: 'me' },
-        { text: 'Difícil', value: 'av' }
-      ]
+      difficultStudentSelected: [],
     }
   },
   mounted() {
@@ -105,21 +111,6 @@ export default {
       this.$http.get("/api/resource/?format=json").then( (req) => this.listSave = req.data = this.listFilter = req.data )
   },
   watch: {
-    difficultStudentSelected(val){
-      console.log(val)
-      if (val == 'in')
-        this.listFilter = this.listSave.filter(function(resource){
-          return resource.difficult_student == 'in'
-        })
-      else if ( val == 'me')
-        this.listFilter = this.listSave.filter(function(resource){
-          return resource.difficult_student == 'me'
-        })
-        else if ( val == 'av')
-          this.listFilter = this.listSave.filter(function(resource){
-            return resource.difficult_student == 'av'
-        })
-    },
     searchFilter(val){
       this.listFilter = this.listSave.filter(item => {
          return item.title.toLowerCase().indexOf(this.searchFilter.toLowerCase()) > -1
@@ -155,31 +146,4 @@ export default {
 </script>
 
 <style>
-  .margin-top{
-    margin-top: 50px;
-  }
-  .margin-left{
-    margin-left: 5px;
-  }
-  .margin-15{
-    margin-left: 15px;
-  }
-  .margin-20{
-    margin-left: 25px;
-  }
-  .margin-right{
-    margin-right: 20px;
-  }
-  .blue{
-    color: #5b9aff;
-  }
-  .red {
-    color: #db0f3b;
-  }
-  .right{
-    text-align: right;
-  }
-  .center {
-    text-align: center;
-  }
 </style>

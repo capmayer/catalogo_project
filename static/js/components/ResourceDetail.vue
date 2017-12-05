@@ -1,128 +1,153 @@
 <template>
   <div id="resource-detail">
-    <hr>
-    <div class="row margin-top margin-left">
-      <div class="col-md-3">
-        <div class="row">
-          <b-card no-body img-top border-variant="light"
-              style="max-width: 30rem;"
-              class="mb-3">
-            <b-img rounded width="440" height="300" :src=imageUrl(resource.image_set[0]) alt="img" />
-
-            <b-card-body>
-              <h4>{{ resource.title }}</h4>
-              <p class="card-text">
-                {{ resource.description }}
-              </p>
-            </b-card-body>
-            <b-button :href=resource.url variant="primary">Site do Recurso</b-button>
-          </b-card>
-        </div>
-      </div>
-      <div class="col-md-5">
-        <div class="row margin-top">
-          <div class="col-md-2">
-            <b-img rounded="circle" width="75" height="75" src="https://s.ytimg.com/yts/img/avatar_720-vflYJnzBZ.png" alt="img"  />
-          </div>
-          <div class="col-md-10">
-            <b-form>
-              <b-form-group>
-                <b-form-textarea id="relato"
-                           v-model="descriptionFeedback"
-                           placeholder="Faça um relato..."
-                           :rows="3"
-                           :max-rows="6">
-                </b-form-textarea>
-              </b-form-group>
-              <b-button  @click="showModal" variant="primary">Enviar</b-button>
-            </b-form>
-          </div>
-          <b-modal ref="myModalRef" hide-footer title="Avaliação adicional">
-            <div class="d-block text-center">
-              <h5>Você recomendaria o recurso?</h5>
-              <b-form-radio-group v-model="selectedApOp"
-                      :options="feedbackAprovOptions"
-                      name="radioInline">
-              </b-form-radio-group>
+    <v-app>
+      <v-navigation-drawer
+        clipped
+        fixed
+        app>
+        <v-card flat class="pa-2">
+          <v-card-media
+            src="/static/resources/img/kids3.jpg"
+            height="200px">
+          </v-card-media>
+          <v-card-title primary-title>
+            <div>
+              <div class="headline">{{ resource.title }}</div>
+              <span class="grey--text">{{ resource.description }}</span>
             </div>
-            <b-btn class="mt-3" variant="primary" block @click="postFeedback">Enviar!</b-btn>
-          </b-modal>
-        </div>
-        <hr>
-        <div class="row margin-top">
-          <div class="col-md-8">
-            <h3>Relatos sobre o recurso:</h3>
-          </div>
-          <div class="col-md-4">
-            <b-input-group>
-              <b-input-group-addon><icon name="reorder"></icon></b-input-group-addon>
-              <b-form-select v-model="feedbackOrderSelected" :options="feedbackOrderOptions">
-              </b-form-select>
-            </b-input-group>
-          </div>
-        </div>
-        <hr>
+          </v-card-title>
+          <v-btn block color="primary" :href=resource.url>ACESSAR RECURSO</v-btn>
+        </v-card>
 
-        <div v-for="feedback in feedbacks">
-          <b-card>
-              <p class="card-text" >
-                <div class="row">
-                  <div class="col-md-2">
-                    <b-img rounded="circle" width="75" height="75" src="https://s.ytimg.com/yts/img/avatar_720-vflYJnzBZ.png" alt="img"  />
-                  </div>
-                  <div class="col-md-10">
-                    {{ feedback.description }}
-                  </div>
-                </div>
-              </p>
-            <div slot="footer">
-              <template v-if=feedback.author>
-                <small class="text-muted">Escrito por {{ feedback.author.username }} em {{ feedback.created_date }}</small>
-              </template>
-            </div>
-          </b-card>
-          <hr>
-        </div>
+      </v-navigation-drawer>
+      <v-toolbar class="white" app fixed clipped-left>
+        <v-toolbar-title v-text="title"></v-toolbar-title>
+        <v-spacer></v-spacer>
+        <v-btn icon>
+          <v-icon>search</v-icon>
+        </v-btn>
+        <v-btn icon>
+          <v-icon>apps</v-icon>
+        </v-btn>
+        <v-btn icon>
+          <v-icon>refresh</v-icon>
+        </v-btn>
+        <v-btn icon>
+          <v-icon>more_vert</v-icon>
+        </v-btn>
+      </v-toolbar>
+      <v-container fluid class="red">
+        <v-container class="mt-5">
+          <v-layout row wrap>
+            <v-flex xs10>
+              <v-card>
+                <v-card-text>
+                  <v-layout row>
+                    <v-avatar size="100px" class="mr-3">
+                      <img src="/static/resources/img/nopic.png" alt="avatar">
+                    </v-avatar>
+                    <v-text-field
+                      name="input-1"
+                      label="Faça um relato..."
+                      auto-grow
+                      multi-line
+                      rows=1
+                      v-model="feedbackDescription">
+                    </v-text-field>
+                  </v-layout>
+                </v-card-text>
+                <v-card-actions>
+                  <v-spacer></v-spacer>
+                  <v-btn
+                    flat
+                    color="primary"
+                    type="submit"
+                    :disabled="!feedbackIsValid"
+                    @click.stop="feedbackDialog=true">
+                    Enviar
+                  </v-btn>
+                </v-card-actions>
+              </v-card>
+            </v-flex>
+          </v-layout>
+          <v-dialog v-model="feedbackDialog" max-width="500px">
+            <v-card>
+              <v-card-title>
+                Mais alguns detalhes...
+              </v-card-title>
+              <v-card-text>
+                <v-layout row wrap>
+                  <v-flex xs12>
+                    <v-switch label="Recomendar recurso"
+                        v-model="resourceFeedbackAp"
+                        color="success"
+                        hide-details></v-switch>
+                  </v-flex>
+                </v-layout>
+              </v-card-text>
+            <v-card-actions>
+              <v-btn color="secundary" flat @click.stop="feedbackDialog=false">Cancelar</v-btn>
+              <v-spacer></v-spacer>
+              <v-btn color="primary" raised @click="postFeedback">Enviar</v-btn>
+            </v-card-actions>
+            </v-card>
+          </v-dialog>
+          <v-snackbar
+            :timeout=timeOut
+            v-model="feedbackSnackbar">
+            Relato registrado
+            <v-btn flat @click.native="feedbackSnackbar = false">Close</v-btn>
+          </v-snackbar>
+        </v-container>
+        <v-container>
+          <v-layout row wrap>
+            <v-flex xs10>
+              <v-card name="baseCard">
+                <v-subheader>
+                  Relatos
+                </v-subheader>
+                <v-container fluid>
+                  <v-layout row wrap>
+                    <v-flex xs12 v-for="(feedback, index) in feedbacks" :key=index>
+                      <v-card flat>
+                        <v-card-text>
+                          <v-layout row wrap>
+                            <v-flex xs1>
+                              <v-avatar>
+                                <img src="/static/resources/img/nopic.png">
+                              </v-avatar>
 
-      </div>
-      <div class="col-md-2">
-        <div class="row">
-          <h3>outras informações:</h3>
-        </div>
-        <div class="row">
-          <div class="col-md-4">
-            <b-card bg-variant="primary"
-                text-variant="white"
-                class="text-center">
-                <div class="col">
-                  <icon name="thumbs-o-up"></icon>
-                  {{ resource.likes_count }}
-                </div>
-            </b-card>
-          </div>
-          <div class="col-md-4">
-            <b-card bg-variant="danger"
-                text-variant="white"
-                class="text-center">
-                <div class="col">
-                  <icon name="thumbs-o-down"></icon>
-                  {{ resource.deslikes_count }}
-                </div>
-            </b-card>
-          </div>
-          <div class="col-md-4">
-            <b-card bg-variant="secondary"
-                text-variant="white"
-                class="text-center">
-                <div class="col">
-                  <icon name="user-o"></icon>
-                  {{ resource.visualization_count }}
-                </div>
-            </b-card>
-          </div>
-        </div>
-      </div>
-    </div>
+                            </v-flex>
+                            <v-flex xs11>
+                              <v-layout row wrap>
+                                <v-flex xs3>
+                                  <h4 :v-if=feedback.anonymous>{{ feedback.anonymous }}</h4>
+                                  <h4 :v-if=feedback.author.username>{{ feedback.author.username }}</h4>
+                                </v-flex>
+                                <v-flex xs9>
+                                  <!-- fure work, last edit -->
+                                </v-flex>
+                                <v-flex xs12>
+                                  <p class="body-1">
+                                    {{ feedback.description }}
+                                  </p>
+                                </v-flex>
+
+                              </v-layout>
+                            </v-flex>
+                          </v-layout>
+                        </v-card-text>
+                      </v-card>
+                      <v-divider></v-divider>
+                    </v-flex>
+                  </v-layout>
+                </v-container>
+              </v-card>
+            </v-flex>
+          </v-layout>
+        </v-container>
+      </v-container>
+    </v-app>
   </div>
 </template>
 
@@ -130,6 +155,7 @@
 export default {
   data(){
     return {
+      title: 'Catalogy',
       resource: '',
 
       feedbackOrderOptions: [
@@ -139,13 +165,12 @@ export default {
       ],
       feedbackOrderSelected: 'rel',
       feedbacks: [],
-
-      descriptionFeedback: '',
-      selectedApOp: '',
-      feedbackAprovOptions: [
-          { text: 'Recomendaria!', value:true},
-          { text: 'Não recomendaria!', value:false},
-      ],
+      feedbackDialog: false,
+      feedbackDescription: '',
+      resourceFeedbackAp: false,
+      token: '',
+      feedbackSnackbar: '',
+      timeOut: 300,
     }
   },
   mounted(){
@@ -154,10 +179,18 @@ export default {
          this.resource = req.data
       })
       this.$http.get("/api"+window.location.pathname+"feedback/?format=json").then( (req) => this.feedbacks = req.data )
+
     }
 
 
   },
+  computed: {
+      feedbackIsValid () {
+        return (
+          this.feedbackDescription
+        )
+      }
+    },
   methods:{
     imageUrl(image){
       if (image != null)
@@ -166,27 +199,20 @@ export default {
         return ""
       }
     },
-    onFeedbackSubmit (evt) {
-      evt.preventDefault()
-      alert(JSON.stringify(this.descriptionFeedback))
-    },
-    showModal () {
-      this.$refs.myModalRef.show()
-    },
-    hideModal () {
-      this.$refs.myModalRef.hide()
-    },
     postFeedback(evt){
       evt.preventDefault()
       this.feedbackData = {
         'resource': this.resource.id,
-        'description': this.descriptionFeedback,
+        'description': this.feedbackDescription,
         'title': 'null',
-        'is_pro': this.is_pro,
+        'is_pro': this.resourceFeedbackAp,
         'author': '',
       }
-      this.$http.post("/api/feedback/", this.feedbackData, { headers: { 'X-CSRF-TOKEN': this.$cookie.get('csrftoken')}}).then( (req) => console.log(req.data) );
-      this.hideModal()
+      this.token = this.$cookie.get('csrftoken')
+      this.$http.post("/api/feedback/", this.feedbackData, { headers: { 'X-CSRF-TOKEN': this.token }}).then( (req) => {
+        this.feedbackDialog = false
+        this.feedbackSnackbar = true
+      })
     },
   }
 }
