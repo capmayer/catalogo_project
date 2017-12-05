@@ -1,6 +1,8 @@
 from django.contrib.auth.models import User
 from django.utils.text import slugify
 from django.db import models
+
+from django.contrib.sessions.models import Session
 from django.contrib.contenttypes.fields import GenericRelation
 
 import uuid
@@ -10,6 +12,10 @@ from autoslug import AutoSlugField
 
 def image_location(instance, filename):
     return '%s/image/%s' % (instance.resource.slug, filename)
+
+class UserSession(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL)
+    session = models.ForeignKey(Session)
 
 class Tag(models.Model):
     name = models.CharField(max_length=50)

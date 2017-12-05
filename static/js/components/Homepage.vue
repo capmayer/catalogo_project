@@ -4,18 +4,10 @@
       <v-toolbar class="white">
         <v-toolbar-title v-text="title"></v-toolbar-title>
         <v-spacer></v-spacer>
-        <v-btn icon>
-          <v-icon>search</v-icon>
+        <v-btn flat href="accounts/login/">
+          Login
         </v-btn>
-        <v-btn icon>
-          <v-icon>apps</v-icon>
-        </v-btn>
-        <v-btn icon>
-          <v-icon>refresh</v-icon>
-        </v-btn>
-        <v-btn icon>
-          <v-icon>more_vert</v-icon>
-        </v-btn>
+
       </v-toolbar>
 
       <v-content>
@@ -26,15 +18,15 @@
               align-center
               justify-center
               class="white--text">
-            <img src="" alt="Vuetify.js" height="200">
+
             <h1 class="white--text mb-2 display-1 text-xs-center">Encontre o recurso certo para sua aula</h1>
-            <div class="subheading mb-3 text-xs-center">Powered by Vuetify</div>
             <v-btn
-              class="blue lighten-2 mt-5"
+              class="blue mt-5"
               dark
               large
               href="/all">
-                  Buscar
+              <v-icon>search</v-icon>
+              Buscar
             </v-btn>
             </v-layout>
             </v-parallax>
@@ -48,9 +40,9 @@
               align-center>
               <v-flex xs12 sm4 class="my-3">
                 <div class="text-xs-center">
-                  <h2 class="headline">The best way to start developing</h2>
+                  <h2 class="headline">Uma plataforma colaborativa</h2>
                   <span class="subheading">
-                    Cras facilisis mi vitae nunc
+
                   </span>
                 </div>
               </v-flex>
@@ -60,45 +52,39 @@
                     <v-flex xs12 md4>
                       <v-card class="elevation-0 transparent">
                         <v-card-text class="text-xs-center">
-                          <v-icon x-large class="blue--text text--lighten-2">color_lens</v-icon>
+                          <v-icon x-large class="blue--text text--lighten-2">search</v-icon>
                         </v-card-text>
                         <v-card-title primary-title class="layout justify-center">
-                          <div class="headline text-xs-center">Material Design</div>
+                          <div class="headline text-xs-center">Encontre</div>
                         </v-card-title>
                         <v-card-text>
-                          Cras facilisis mi vitae nunc lobortis pharetra. Nulla volutpat tincidunt ornare.
-                          Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.
-                          Nullam in aliquet odio. Aliquam eu est vitae tellus bibendum tincidunt. Suspendisse potenti.
+                          Há uma infinidade de recursos para o ensino de programação, mas como você sabe qual o melhor para você? Utilize nossos filtros para encontra-lo.
                         </v-card-text>
                       </v-card>
                     </v-flex>
                     <v-flex xs12 md4>
                       <v-card class="elevation-0 transparent">
                         <v-card-text class="text-xs-center">
-                          <v-icon x-large class="blue--text text--lighten-2">flash_on</v-icon>
+                          <v-icon x-large class="blue--text text--lighten-2">thumb_up</v-icon>
                         </v-card-text>
                         <v-card-title primary-title class="layout justify-center">
-                          <div class="headline">Fast development</div>
+                          <div class="headline">Avalie</div>
                         </v-card-title>
                         <v-card-text>
-                          Cras facilisis mi vitae nunc lobortis pharetra. Nulla volutpat tincidunt ornare.
-                          Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.
-                          Nullam in aliquet odio. Aliquam eu est vitae tellus bibendum tincidunt. Suspendisse potenti.
+                          Faça uma avaliação das caractéristicas de um recurso de programação que mais lhe agradaram.
                         </v-card-text>
                       </v-card>
                     </v-flex>
                     <v-flex xs12 md4>
                       <v-card class="elevation-0 transparent">
                         <v-card-text class="text-xs-center">
-                          <v-icon x-large class="blue--text text--lighten-2">build</v-icon>
+                          <v-icon x-large class="blue--text text--lighten-2">share</v-icon>
                         </v-card-text>
                         <v-card-title primary-title class="layout justify-center">
-                          <div class="headline text-xs-center">Completely Open Sourced</div>
+                          <div class="headline text-xs-center">Compartilhe</div>
                         </v-card-title>
                         <v-card-text>
-                          Cras facilisis mi vitae nunc lobortis pharetra. Nulla volutpat tincidunt ornare.
-                          Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.
-                          Nullam in aliquet odio. Aliquam eu est vitae tellus bibendum tincidunt. Suspendisse potenti.
+                          Escreva um relato compartilhando sua experiência em sala de aula utilizando o recurso.
                         </v-card-text>
                       </v-card>
                     </v-flex>
@@ -111,15 +97,14 @@
           <section>
             <v-parallax src="/static/resources/img/kids.jpg" height="380">
               <v-layout column align-center justify-center>
-                <div class="headline white--text mb-3 text-xs-center">Web development has never been easier</div>
-                <em>Kick-start your application today</em>
+                <div class="headline white--text mb-3 text-xs-center">Ensine programação, encontre o recurso.</div>
                 <v-btn
-                  class="blue lighten-2 mt-5"
+                  class="blue mt-5"
                   dark
                   large
-                  href="/pre-made-themes"
-                >
-                  Get Started
+                  href="/all">
+                  <v-icon>search</v-icon>
+                  Buscar
                 </v-btn>
               </v-layout>
             </v-parallax>
@@ -131,46 +116,29 @@
                 <v-flex xs12 sm4>
                   <v-card class="elevation-0 transparent">
                     <v-card-title primary-title class="layout justify-center">
-                      <div class="headline">Company info</div>
+                      <div class="headline">Sobre</div>
                     </v-card-title>
                     <v-card-text>
-                      Cras facilisis mi vitae nunc lobortis pharetra. Nulla volutpat tincidunt ornare.
-                      Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.
-                      Nullam in aliquet odio. Aliquam eu est vitae tellus bibendum tincidunt. Suspendisse potenti.
+                      Somos uma plataforma para compartilhar experiências em sala de aula.
                     </v-card-text>
                   </v-card>
                 </v-flex>
                 <v-flex xs12 sm4 offset-sm1>
                   <v-card class="elevation-0 transparent">
                     <v-card-title primary-title class="layout justify-center">
-                      <div class="headline">Contact us</div>
+                      <div class="headline">Contato</div>
                     </v-card-title>
                     <v-card-text>
-                      Cras facilisis mi vitae nunc lobortis pharetra. Nulla volutpat tincidunt ornare.
+                      Esse projeto é apoiado pelo Clube da Computação projeto de extensão da Universidade Federal de Santa Maria - UFSM.
                     </v-card-text>
                     <v-list class="transparent">
-                      <v-list-tile>
-                        <v-list-tile-action>
-                          <v-icon class="blue--text text--lighten-2">phone</v-icon>
-                        </v-list-tile-action>
-                        <v-list-tile-content>
-                          <v-list-tile-title>777-867-5309</v-list-tile-title>
-                        </v-list-tile-content>
-                      </v-list-tile>
-                      <v-list-tile>
-                        <v-list-tile-action>
-                          <v-icon class="blue--text text--lighten-2">place</v-icon>
-                        </v-list-tile-action>
-                        <v-list-tile-content>
-                          <v-list-tile-title>Chicago, US</v-list-tile-title>
-                        </v-list-tile-content>
-                      </v-list-tile>
+
                       <v-list-tile>
                         <v-list-tile-action>
                           <v-icon class="blue--text text--lighten-2">email</v-icon>
                         </v-list-tile-action>
                         <v-list-tile-content>
-                          <v-list-tile-title>john@vuetifyjs.com</v-list-tile-title>
+                          <v-list-tile-title>henriqmayer@gmail.com</v-list-tile-title>
                         </v-list-tile-content>
                       </v-list-tile>
                     </v-list>
@@ -184,10 +152,7 @@
             <v-layout row wrap align-center>
               <v-flex xs12>
                 <div class="white--text ml-3">
-                  Made with
-                  <v-icon class="red--text">favorite</v-icon>
-                  by <a class="white--text" href="https://vuetifyjs.com" target="_blank">Vuetify</a>
-                  and <a class="white--text" href="https://github.com/vwxyzjn">Costa Huang</a>
+                  Contribua com nossa ideia, acesse nosso repositório no <a class="white--text" href="https://github.com/capmayer/catalogo_project" target="_blank">Github.</a>
                 </div>
               </v-flex>
             </v-layout>
@@ -200,9 +165,9 @@
 export default {
   data() {
     return {
-      title: 'Catalogy'
+      title: 'Catalogy',
     }
-  }
+  },
 }
 </script>
 

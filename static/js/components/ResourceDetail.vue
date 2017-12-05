@@ -23,20 +23,11 @@
       <v-toolbar class="white" app fixed clipped-left>
         <v-toolbar-title v-text="title"></v-toolbar-title>
         <v-spacer></v-spacer>
-        <v-btn icon>
-          <v-icon>search</v-icon>
-        </v-btn>
-        <v-btn icon>
-          <v-icon>apps</v-icon>
-        </v-btn>
-        <v-btn icon>
-          <v-icon>refresh</v-icon>
-        </v-btn>
-        <v-btn icon>
-          <v-icon>more_vert</v-icon>
+        <v-btn flat href="accounts/login/">
+          Login
         </v-btn>
       </v-toolbar>
-      <v-container fluid class="red">
+      <v-container fluid>
         <v-container class="mt-5">
           <v-layout row wrap>
             <v-flex xs10>
@@ -122,7 +113,7 @@
                               <v-layout row wrap>
                                 <v-flex xs3>
                                   <h4 :v-if=feedback.anonymous>{{ feedback.anonymous }}</h4>
-                                  <h4 :v-if=feedback.author.username>{{ feedback.author.username }}</h4>
+                                  <h4 :v-else=feedback.author.username>{{ feedback.author.username }}</h4>
                                 </v-flex>
                                 <v-flex xs9>
                                   <!-- fure work, last edit -->
@@ -214,6 +205,10 @@ export default {
         this.feedbackSnackbar = true
       })
     },
+    checkToken(){
+      if (this.$cookie.get('csrftoken'))
+        this.token = this.$cookie.get('csrftoken')
+    }
   }
 }
 </script>

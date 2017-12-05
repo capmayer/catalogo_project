@@ -25,29 +25,20 @@
         </div>
         <v-subheader>Engajamento</v-subheader>
         <div class="pa-2">
-          <v-switch label="Fácil" v-model="difficultStudentSelected" value="in"></v-switch>
-          <v-switch label="Mediano" v-model="difficultStudentSelected" value="me"></v-switch>
-          <v-switch label="Difícil" v-model="difficultStudentSelected" value="av"></v-switch>
+          <v-switch label="Fácil" v-model="difIn" value="in"></v-switch>
+          <v-switch label="Mediano" v-model="difMe" value="me"></v-switch>
+          <v-switch label="Difícil" v-model="difAv" value="av"></v-switch>
         </div>
       </v-navigation-drawer>
       <v-toolbar class="white" app fixed clipped-left>
         <v-toolbar-title v-text="title"></v-toolbar-title>
         <v-spacer></v-spacer>
-        <v-btn icon>
-          <v-icon>search</v-icon>
-        </v-btn>
-        <v-btn icon>
-          <v-icon>apps</v-icon>
-        </v-btn>
-        <v-btn icon>
-          <v-icon>refresh</v-icon>
-        </v-btn>
-        <v-btn icon>
-          <v-icon>more_vert</v-icon>
+        <v-btn flat href="accounts/login/">
+          Login
         </v-btn>
       </v-toolbar>
-      <v-container fluid class="red">
-        <v-container grid-list-lg class="blue">
+      <v-container fluid>
+        <v-container grid-list-lg>
           <v-layout row wrap>
             <v-flex xs12>
               <h5> Recursos </h5>
@@ -103,7 +94,9 @@ export default {
         { text: 'Inglês', value:'en-us' },
       ],
       featuresSelected: [],
-      difficultStudentSelected: [],
+      difAv: false,
+      difMe: false,
+      difIn: false,
     }
   },
   mounted() {
@@ -115,6 +108,41 @@ export default {
       this.listFilter = this.listSave.filter(item => {
          return item.title.toLowerCase().indexOf(this.searchFilter.toLowerCase()) > -1
       })
+    },
+    difAv(val){
+      if (val) {
+        this.listFilter = this.listSave.filter(item => { return item.difficult_student == 'av'})
+        this.difMe = false
+        this.difIn = false
+      }else{
+        this.listFilter = this.listSave.filter(item => { return item.difficult_student != 'av'})
+      }
+    },
+    difMe(val){
+      if (val) {
+        this.listFilter = this.listSave.filter(item => { return item.difficult_student == 'me'})
+        this.difAv = false
+        this.difIn = false
+      }else{
+        this.listFilter = this.listSave.filter(item => { return item.difficult_student != 'me'})
+      }
+    },
+    difIn(val){
+      if (val) {
+        this.listFilter = this.listSave.filter(item => { return item.difficult_student == 'in'})
+        this.difMe = false
+        this.difAv = false
+      }else{
+        this.listFilter = this.listSave.filter(item => { return item.difficult_student != 'in'})
+      }
+    },
+    language(val){
+      if(val == "pt-br"){
+        this.listFilter = this.listSave.filter(item => { return item })
+      }
+      if(val == "en-us"){
+        this.listFilter = null
+      }
     }
   },
   methods:{
