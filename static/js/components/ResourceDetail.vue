@@ -190,7 +190,7 @@ export default {
       }
     },
     goToUrl(url){
-      window.location = "http://" + url
+      window.location = "https://" + url
     },
     postFeedback(evt){
       evt.preventDefault()
