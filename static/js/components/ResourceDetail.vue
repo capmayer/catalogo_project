@@ -7,7 +7,7 @@
         app>
         <v-card flat class="pa-2">
           <v-card-media
-            src="/static/resources/img/kids3.jpg"
+            :src=imageUrl(resource.image_set[0])
             height="200px">
           </v-card-media>
           <v-card-title primary-title>
@@ -16,7 +16,7 @@
               <span class="grey--text">{{ resource.description }}</span>
             </div>
           </v-card-title>
-          <v-btn block color="primary" :href=resource.url>ACESSAR RECURSO</v-btn>
+          <v-btn block color="primary" v-on:click=goToUrl(resource.url)>ACESSAR RECURSO</v-btn>
         </v-card>
 
       </v-navigation-drawer>
@@ -35,7 +35,7 @@
                 <v-card-text>
                   <v-layout row>
                     <v-avatar size="100px" class="mr-3">
-                      <img :src=imageUrl(resource.image_set[0]) alt="avatar">
+                      <img src="/static/resources/img/nopic.png" alt="avatar">
                     </v-avatar>
                     <v-text-field
                       name="input-1"
@@ -160,7 +160,7 @@ export default {
       resourceFeedbackAp: false,
       token: '',
       feedbackSnackbar: '',
-      timeOut: 300,
+      timeOut: 1000,
     }
   },
   mounted(){
@@ -188,6 +188,9 @@ export default {
       else {
         return ""
       }
+    },
+    goToUrl(url){
+      window.location = "http://" + url
     },
     postFeedback(evt){
       evt.preventDefault()
