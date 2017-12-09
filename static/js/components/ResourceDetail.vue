@@ -23,9 +23,16 @@
       <v-toolbar class="white" app fixed clipped-left>
         <v-toolbar-title v-text="title"></v-toolbar-title>
         <v-spacer></v-spacer>
-        <v-btn flat href="accounts/login/">
-          Login
-        </v-btn>
+        <template v-if="userLogged">
+          <v-btn flat>
+            {{ userName }}
+          </v-btn>
+        </template>
+        <template v-else="userLogged">
+          <v-btn flat>
+            Entrar
+          </v-btn>
+        </template>
       </v-toolbar>
       <v-container fluid class="cyan lighten-4">
         <v-container class="mt-5">
@@ -112,7 +119,7 @@
                             <v-flex xs11>
                               <v-layout row wrap>
                                 <v-flex xs3>
-                                  <h4>{{ feedback.author.username }}</h4>
+                                  <h4>{{ feedback.author }}</h4>
                                 </v-flex>
                                 <v-flex xs9>
                                   <!-- fure work, last edit -->
@@ -147,7 +154,8 @@ export default {
     return {
       title: 'Catalogy',
       resource: '',
-
+      userName: '',
+      userNameGetter: false,
       feedbackOrderOptions: [
         { text: 'Relevancia', value:'rel' },
         { text: 'Mais antigo', value:'ant' },
@@ -158,7 +166,7 @@ export default {
       feedbackDialog: false,
       feedbackDescription: '',
       resourceFeedbackAp: false,
-      token: '',
+      token: this.$cookie.get('csrftoken'),
       feedbackSnackbar: '',
       timeOut: 1000,
     }
@@ -169,16 +177,17 @@ export default {
          this.resource = req.data
       })
       this.$http.get("/api"+window.location.pathname+"feedback/?format=json").then( (req) => this.feedbacks = req.data )
-
+      this.userName = document.getElementById('userName').value
     }
-
-
   },
   computed: {
       feedbackIsValid () {
         return (
           this.feedbackDescription
         )
+      },
+      userLogged (){
+        return (this.getUserFromHTML())
       }
     },
   methods:{
@@ -199,10 +208,10 @@ export default {
         'description': this.feedbackDescription,
         'title': 'null',
         'is_pro': this.resourceFeedbackAp,
-        'author': '',
+        'author': this.userName,
       }
       this.token = this.$cookie.get('csrftoken')
-      this.$http.post("/api/feedback/", this.feedbackData, { headers: { 'X-CSRF-TOKEN': this.token }}).then( (req) => {
+      this.$http.post("/api/feedback/", this.feedbackData, { headers: { 'X-CSRFToken': this.token }}).then( (req) => {
         this.feedbackDialog = false
         this.feedbackSnackbar = true
       })
@@ -210,6 +219,14 @@ export default {
     checkToken(){
       if (this.$cookie.get('csrftoken'))
         this.token = this.$cookie.get('csrftoken')
+    },
+    getUserFromHTML(){
+      this.userName = document.getElementById('userName').value
+      if (this.userName == '')
+        return false
+      else {
+        return true
+      }
     }
   }
 }

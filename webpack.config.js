@@ -2,7 +2,7 @@ var path = require('path')
 var webpack = require('webpack')
 
 module.exports = {
-  entry: './static/js/App.js',
+  entry: './static/js/main.js',
   output: {
     path: path.resolve(__dirname, './static/public'),
     publicPath: '/static/public/',
@@ -21,9 +21,6 @@ module.exports = {
       },
       {
         test: /\.js$/,
-        include: [
-          require.resolve("bootstrap-vue"),
-        ],
         loader: 'babel-loader',
         exclude: /node_modules/
       },

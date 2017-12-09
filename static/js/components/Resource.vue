@@ -34,7 +34,7 @@
         <v-toolbar-title v-text="title"></v-toolbar-title>
         <v-spacer></v-spacer>
         <v-btn flat href="accounts/login/">
-          Login
+          {{ user }}
         </v-btn>
       </v-toolbar>
       <v-container fluid class="cyan lighten-4">
@@ -81,6 +81,7 @@
 export default {
   data() {
     return {
+      user: '',
       show: '',
       title: "Catalogy",
       drawer: null,

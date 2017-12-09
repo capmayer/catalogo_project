@@ -9,7 +9,9 @@ import Vuetify from 'vuetify'
 
 Vue.use(Vuetify)
 
-Vue.use(VueResource, lodash)
+Vue.use(VueResource)
+
+Vue.use(lodash)
 
 var VueCookie = require('vue-cookie');
 // Tell Vue to use the plugin

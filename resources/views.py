@@ -4,6 +4,7 @@ from django.core.serializers import serialize
 from django.http import HttpResponse, Http404
 from django.shortcuts import render, redirect
 from django.forms import modelformset_factory
+from django.views.decorators.csrf import ensure_csrf_cookie
 
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -18,19 +19,14 @@ from .forms import ResourceForm, FeedbackForm, FeedbackAnonymousForm, ImageForm,
 from .serializers import ResourceSerializer, FeedbackSerializer, LikeSerializer, DeslikeSerializer
 
 def home(request):
-    resources_list = Resource.objects.filter(image__is_main=True).order_by("-created_date")
-    return render(request, 'resources/home.html', { 'resources_list': resources_list })
+    return render(request, 'resources/home.html', { 'user': request.user })
 
 def resources_list(request):
-    resources_list = Resource.objects.filter(image__is_main=True)
-    resource_filter = ResourceFilter(request.GET, queryset=resources_list)
-    return render(request, 'resources/resource_list.html', { 'resource_filter': resource_filter })
+    return render(request, 'resources/resource_list.html', { 'user': request.user })
 
+@ensure_csrf_cookie
 def resource_detail(request, slug):
-    # get the specified resource
-    resource = Resource.objects.get(slug=slug)
-    
-    return render(request, 'resources/resource_detail.html', {})
+    return render(request, 'resources/resource_detail.html', { 'userName': request.user.username, 'userId': request.user.id })
 
 def resource_new(request):
     if request.method == "POST":
@@ -62,10 +58,6 @@ def resource_new(request):
         image_form = ImageForm()
         tag_form = TagForm()
     return render(request, 'resources/resource_new.html', { 'resource_form': resource_form, 'image_form': image_form, 'tag_form': tag_form })
-
-def resource_all(request):
-    resources = serialize("json", Resource.objects.all())
-    return HttpResponse(resources, content_type="application/json")
 
 class ResourceList(APIView):
     def get(self, request, format=None):
@@ -118,7 +110,6 @@ class FeedbackList(APIView):
         return Response(serializer.data, content_type="application/json")
 
     def post(self, request, format=None):
-        print(request.data)
         serializer = FeedbackSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()

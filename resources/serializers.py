@@ -1,4 +1,5 @@
 from rest_framework import serializers
+from rest_framework.fields import CurrentUserDefault
 
 from django.contrib.auth.models import User
 from .models import Resource, Feedback, Image, Like, Deslike
@@ -38,7 +39,7 @@ class ResourceSerializer(serializers.ModelSerializer):
 
 
 class FeedbackSerializer(serializers.ModelSerializer):
-    author = UserSerializer(read_only=True)
+    author = serializers.SlugRelatedField(queryset=User.objects.all(), slug_field='username')
     likes_count = serializers.IntegerField(source='likes.count', read_only=True)
     deslikes_count = serializers.IntegerField(source='deslikes.count', read_only=True)
     class Meta:
