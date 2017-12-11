@@ -33,9 +33,16 @@
       <v-toolbar class="white" app fixed clipped-left>
         <v-toolbar-title v-text="title"></v-toolbar-title>
         <v-spacer></v-spacer>
-        <v-btn flat href="accounts/login/">
-          {{ user }}
-        </v-btn>
+        <template v-if="userLogged">
+          <v-btn flat>
+            {{ userName }}
+          </v-btn>
+        </template>
+        <template v-else="userLogged">
+          <v-btn flat>
+            Entrar
+          </v-btn>
+        </template>
       </v-toolbar>
       <v-container fluid class="cyan lighten-4">
         <v-container grid-list-lg>
@@ -83,6 +90,7 @@ export default {
     return {
       user: '',
       show: '',
+      userName: '',
       title: "Catalogy",
       drawer: null,
       sortDirection: 'desc',
@@ -98,6 +106,11 @@ export default {
       difAv: false,
       difMe: false,
       difIn: false,
+    }
+  },
+  computed: {
+    userLogged (){
+      return (this.getUserFromHTML())
     }
   },
   mounted() {
@@ -163,6 +176,14 @@ export default {
     },
     resourceUrl(slug){
       return "../resource/"+slug
+    },
+    getUserFromHTML(){
+      this.userName = document.getElementById('userName').value
+      if (this.userName == '')
+        return false
+      else {
+        return true
+      }
     }
   }
 }

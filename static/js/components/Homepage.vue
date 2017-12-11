@@ -4,10 +4,16 @@
       <v-toolbar class="white">
         <v-toolbar-title v-text="title"></v-toolbar-title>
         <v-spacer></v-spacer>
-        <v-btn flat href="accounts/login/">
-          Login
-        </v-btn>
-
+        <template v-if="userLogged">
+          <v-btn flat>
+            {{ userName }}
+          </v-btn>
+        </template>
+        <template v-else="userLogged">
+          <v-btn flat>
+            Entrar
+          </v-btn>
+        </template>
       </v-toolbar>
 
       <v-content>
@@ -166,8 +172,24 @@ export default {
   data() {
     return {
       title: 'Catalogy',
+      userName: '',
     }
   },
+  computed:{
+    userLogged (){
+      return (this.getUserFromHTML())
+    }
+  },
+  methods:{
+    getUserFromHTML(){
+      this.userName = document.getElementById('userName').value
+      if (this.userName == '')
+        return false
+      else {
+        return true
+      }
+    }
+  }
 }
 </script>
 

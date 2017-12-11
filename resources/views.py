@@ -19,10 +19,10 @@ from .forms import ResourceForm, FeedbackForm, FeedbackAnonymousForm, ImageForm,
 from .serializers import ResourceSerializer, FeedbackSerializer, LikeSerializer, DeslikeSerializer
 
 def home(request):
-    return render(request, 'resources/home.html', { 'user': request.user })
+    return render(request, 'resources/home.html', { 'userName': request.user.username, 'userId': request.user.id })
 
 def resources_list(request):
-    return render(request, 'resources/resource_list.html', { 'user': request.user })
+    return render(request, 'resources/resource_list.html', { 'userName': request.user.username, 'userId': request.user.id })
 
 @ensure_csrf_cookie
 def resource_detail(request, slug):
