@@ -107,7 +107,7 @@
               </v-card>
             </v-flex>
             <v-flex xs2 class="ml-5">
-              <v-card>
+              <v-card flat class="deep-purple lighten-4">
                 <v-subheader>
                   Recursos relacionados
                 </v-subheader>
@@ -115,7 +115,7 @@
                   <v-layout row wrap>
                     <v-flex xs12 v-for="(resource, index) in resource.resources" :key="index">
                       <v-card>
-                        <v-card-media :src=imageUrl(resource.image_set[0]) height="100px"></v-card-media>
+                        <v-card-media :src=imageUrl(resource.image_set[0]) height="150px"></v-card-media>
                       </v-card>
                     </v-flex>
                   </v-layout>
