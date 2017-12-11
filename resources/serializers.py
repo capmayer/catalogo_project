@@ -33,9 +33,11 @@ class ResourceSerializer(serializers.ModelSerializer):
     visualization_count = serializers.IntegerField(source='hit_count_generic.count', read_only=True)
     likes_count = serializers.IntegerField(source='likes.count', read_only=True)
     deslikes_count = serializers.IntegerField(source='deslikes.count', read_only=True)
+    resources = ResourceSerializer(read_only=True, many=True)
     class Meta:
         model = Resource
-        fields = ('id','title', 'description', 'slug', 'languages', 'url', 'image_set', 'feedback_count', 'likes_count', 'deslikes_count', 'difficult_student', 'visualization_count')
+        fields = ('id','title', 'description', 'slug', 'languages', 'url', 'image_set', 'feedback_count', 'likes_count', 'deslikes_count', 'difficult_student', 'visualization_count',
+        'resources')
 
 
 class FeedbackSerializer(serializers.ModelSerializer):

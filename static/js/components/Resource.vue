@@ -29,6 +29,55 @@
           <v-switch label="Mediano" v-model="difMe" value="me"></v-switch>
           <v-switch label="Difícil" v-model="difAv" value="av"></v-switch>
         </div>
+        <template>
+          <v-footer absolute class="pa-3">
+            <a v-on:click="addResourceDialog= true">ADICIONE UM RECURSO</a>
+          </v-footer>
+        </template>
+        <v-dialog v-model="addResourceDialog" persistent max-width="500px">
+          <v-card>
+        <v-card-title>
+          <span class="headline">Adicionar Recurso</span>
+        </v-card-title>
+        <v-card-text>
+          <v-container grid-list-md>
+            <v-layout wrap>
+              <v-flex xs12 sm12 md12>
+                <v-text-field persistent-hint label="Nome do Recurso" hint="exemplo: Hora do Código: Minecraft" required></v-text-field>
+              </v-flex>
+              <v-flex xs12 sm12 md12>
+                <v-text-field persistent-hint label="URL" hint="exemplo: https://hourofcode.com/mchoc" required></v-text-field>
+              </v-flex>
+              </v-flex>
+              <v-flex xs12>
+                <v-text-field multi-line v-model="addResourceFormDesc" label="Descrição" required></v-text-field>
+              </v-flex>
+              <v-flex xs12 sm6>
+                <v-select
+                  label="Nível de Engajamento"
+                  required
+                  :items="addResourceFormNEOps"
+                ></v-select>
+              </v-flex>
+              <v-flex xs12 sm6>
+                <v-select
+                  label="Idiomas"
+                  multiple
+                  autocomplete
+                  :items="languageOptions"
+                ></v-select>
+              </v-flex>
+            </v-layout>
+          </v-container>
+          <small>*indicates required field</small>
+        </v-card-text>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn flat @click.native="addResourceDialog = false">Fechar</v-btn>
+          <v-btn color="blue darken-1 " flat @click.native="addResourceDialog = false">Adicionar</v-btn>
+        </v-card-actions>
+      </v-card>
+        </v-dialog>
       </v-navigation-drawer>
       <v-toolbar class="white" app fixed clipped-left>
         <v-toolbar-title v-text="title"></v-toolbar-title>
@@ -44,7 +93,7 @@
           </v-btn>
         </template>
       </v-toolbar>
-      <v-container fluid class="cyan lighten-4">
+      <v-container fluid class="deep-purple lighten-4">
         <v-container grid-list-lg>
           <v-layout row wrap>
             <v-flex xs12>
@@ -106,6 +155,14 @@ export default {
       difAv: false,
       difMe: false,
       difIn: false,
+      token: '',
+      addResourceDialog: false,
+      addResourceFormDesc: '',
+      addResourceFormNEOps: [
+        { text: 'Fácil', value: 'in' },
+        { text: 'Mediano', value: 'me' },
+        { text: 'Difícil', value: 'av' },
+      ]
     }
   },
   computed: {
@@ -184,7 +241,22 @@ export default {
       else {
         return true
       }
-    }
+    },
+    postResource(evt){
+      evt.preventDefault()
+      this.resourceData = {
+        'title': this.addResourceFormTitle,
+        'description': this.addResourceFormDesc,
+        'url': this.addResourceFormUrl,
+        'author': this.userName,
+        'difficult_student': this.addResourceFormDif,
+        'languages': this.addResourceFormLangs,
+      }
+      this.token = this.$cookie.get('csrftoken')
+      this.$http.post("/api/feedback/", this.feedbackData, { headers: { 'X-CSRFToken': this.token }}).then( (req) => {
+
+      })
+    },
   }
 }
 </script>

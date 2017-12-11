@@ -34,9 +34,9 @@
           </v-btn>
         </template>
       </v-toolbar>
-      <v-container fluid class="cyan lighten-4">
+      <v-container fluid class="deep-purple lighten-4">
         <v-container class="mt-5">
-          <v-layout row wrap>
+          <v-layout row>
             <v-flex xs10>
               <v-card>
                 <v-card-text>
@@ -65,6 +65,61 @@
                     Enviar
                   </v-btn>
                 </v-card-actions>
+              </v-card>
+              <v-card name="baseCard" class="mt-5">
+                <v-subheader>
+                  Relatos
+                </v-subheader>
+                <v-container fluid>
+                  <v-layout row wrap>
+                    <v-flex xs12 v-for="(feedback, index) in feedbacks" :key=index>
+                      <v-card flat>
+                        <v-card-text>
+                          <v-layout row wrap>
+                            <v-flex xs1>
+                              <v-avatar>
+                              <img src="/static/resources/img/nopic.png">
+                            </v-avatar>
+                            </v-flex>
+                            <v-flex xs11>
+                              <v-layout row wrap>
+                                <v-flex xs3>
+                                  <h4>{{ feedback.author }}</h4>
+                                </v-flex>
+                                <v-flex xs9>
+                                  <!-- fure work, last edit -->
+                                </v-flex>
+                                <v-flex xs12>
+                                  <p class="body-1">
+                                    {{ feedback.description }}
+                                  </p>
+                                </v-flex>
+
+                              </v-layout>
+                            </v-flex>
+                          </v-layout>
+                        </v-card-text>
+                      </v-card>
+                      <v-divider></v-divider>
+                    </v-flex>
+                  </v-layout>
+                </v-container>
+              </v-card>
+            </v-flex>
+            <v-flex xs2 class="ml-5">
+              <v-card>
+                <v-subheader>
+                  Recursos relacionados
+                </v-subheader>
+                <v-container fluid>
+                  <v-layout row wrap>
+                    <v-flex xs12 v-for="(resource, index) in resource.resources" :key="index">
+                      <v-card>
+                        <v-card-media :src=imageUrl(resource.image_set[0]) height="100px"></v-card-media>
+                      </v-card>
+                    </v-flex>
+                  </v-layout>
+                </v-container>
               </v-card>
             </v-flex>
           </v-layout>
@@ -96,52 +151,6 @@
             Relato registrado
             <v-btn flat @click.native="feedbackSnackbar = false">Close</v-btn>
           </v-snackbar>
-        </v-container>
-        <v-container>
-          <v-layout row wrap>
-            <v-flex xs10>
-              <v-card name="baseCard">
-                <v-subheader>
-                  Relatos
-                </v-subheader>
-                <v-container fluid>
-                  <v-layout row wrap>
-                    <v-flex xs12 v-for="(feedback, index) in feedbacks" :key=index>
-                      <v-card flat>
-                        <v-card-text>
-                          <v-layout row wrap>
-                            <v-flex xs1>
-                              <v-avatar>
-                                <img src="/static/resources/img/nopic.png">
-                              </v-avatar>
-
-                            </v-flex>
-                            <v-flex xs11>
-                              <v-layout row wrap>
-                                <v-flex xs3>
-                                  <h4>{{ feedback.author }}</h4>
-                                </v-flex>
-                                <v-flex xs9>
-                                  <!-- fure work, last edit -->
-                                </v-flex>
-                                <v-flex xs12>
-                                  <p class="body-1">
-                                    {{ feedback.description }}
-                                  </p>
-                                </v-flex>
-
-                              </v-layout>
-                            </v-flex>
-                          </v-layout>
-                        </v-card-text>
-                      </v-card>
-                      <v-divider></v-divider>
-                    </v-flex>
-                  </v-layout>
-                </v-container>
-              </v-card>
-            </v-flex>
-          </v-layout>
         </v-container>
       </v-container>
     </v-app>
