@@ -199,7 +199,7 @@ export default {
       }
     },
     goToUrl(url){
-      window.location = "https://" + url
+      location.href = "https://" + url
     },
     postFeedback(evt){
       evt.preventDefault()
