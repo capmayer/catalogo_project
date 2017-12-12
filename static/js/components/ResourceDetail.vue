@@ -4,7 +4,8 @@
       <v-navigation-drawer
         clipped
         fixed
-        app>
+        app
+        v-model="drawer">
         <v-card flat class="pa-2">
           <v-card-media
             :src=imageUrl(resource.image_set[0])
@@ -21,7 +22,8 @@
 
       </v-navigation-drawer>
       <v-toolbar class="white" app fixed clipped-left>
-        <v-toolbar-title v-text="title"></v-toolbar-title>
+        <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
+        <v-toolbar-title v-on:click="goToUrl('/')" v-text="title"></v-toolbar-title>
         <v-spacer></v-spacer>
         <template v-if="userLogged">
           <v-btn flat>
@@ -34,7 +36,7 @@
           </v-btn>
         </template>
       </v-toolbar>
-      <v-container fluid class="deep-purple lighten-4">
+      <v-container fluid class="grey lighten-3">
         <v-container class="mt-5">
           <v-layout row>
             <v-flex xs10>
@@ -66,55 +68,167 @@
                   </v-btn>
                 </v-card-actions>
               </v-card>
-              <v-card name="baseCard" class="mt-5">
-                <v-subheader>
-                  Relatos
-                </v-subheader>
-                <v-container fluid>
-                  <v-layout row wrap>
-                    <v-flex xs12 v-for="(feedback, index) in feedbacks" :key=index>
-                      <v-card flat>
-                        <v-card-text>
-                          <v-layout row wrap>
-                            <v-flex xs1>
-                              <v-avatar>
-                              <img src="/static/resources/img/nopic.png">
-                            </v-avatar>
-                            </v-flex>
-                            <v-flex xs11>
-                              <v-layout row wrap>
-                                <v-flex xs3>
-                                  <h4>{{ feedback.author }}</h4>
-                                </v-flex>
-                                <v-flex xs9>
-                                  <!-- fure work, last edit -->
-                                </v-flex>
-                                <v-flex xs12>
-                                  <p class="body-1">
-                                    {{ feedback.description }}
-                                  </p>
-                                </v-flex>
-
-                              </v-layout>
-                            </v-flex>
-                          </v-layout>
-                        </v-card-text>
-                      </v-card>
-                      <v-divider></v-divider>
-                    </v-flex>
-                  </v-layout>
-                </v-container>
-              </v-card>
+              <v-tabs fixed icons centered class="mt-5">
+                <v-tabs-bar dark class="light-blue lighten-1">
+                  <v-tabs-slider color="black"></v-tabs-slider>
+                  <v-tabs-item href="#pros">
+                    <v-icon>thumb_up</v-icon>
+                    Pros
+                  </v-tabs-item>
+                  <v-tabs-item href="#contras">
+                    <v-icon>thumb_down</v-icon>
+                    Contras
+                  </v-tabs-item>
+                  <v-tabs-item href="#relatos">
+                    <v-icon>account_box</v-icon>
+                    Relatos
+                  </v-tabs-item>
+                </v-tabs-bar>
+                <v-tabs-items>
+                  <v-tabs-content id="pros">
+                    <v-card name="baseCard">
+                      <v-container fluid>
+                        <v-layout row wrap>
+                          <v-flex xs12 v-if=!feedbacks.length>
+                            <v-card flat>
+                              <v-card-text>
+                                Nenhum feedback registrado ainda, seja o primeiro!
+                              </v-card-text>
+                            </v-card>
+                          </v-flex>
+                          <v-flex xs12 v-for="(feedback, index) in feedbacks" :key=index v-if=feedback.is_pro>
+                            <v-card flat>
+                              <v-card-text>
+                                <v-layout row wrap>
+                                  <v-flex xs1>
+                                    <v-avatar>
+                                    <img src="/static/resources/img/nopic.png">
+                                  </v-avatar>
+                                  </v-flex>
+                                  <v-flex xs11>
+                                    <v-layout row wrap>
+                                      <v-flex xs3>
+                                        <h4>{{ feedback.author }}</h4>
+                                      </v-flex>
+                                      <v-flex xs9>
+                                        <!-- fure work, last edit -->
+                                      </v-flex>
+                                      <v-flex xs12>
+                                        <p class="body-1">
+                                          {{ feedback.description }}
+                                        </p>
+                                      </v-flex>
+                                    </v-layout>
+                                  </v-flex>
+                                </v-layout>
+                              </v-card-text>
+                            </v-card>
+                            <v-divider></v-divider>
+                          </v-flex>
+                        </v-layout>
+                      </v-container>
+                    </v-card>
+                  </v-tabs-content>
+                  <v-tabs-content id="contras">
+                    <v-card name="baseCard">
+                      <v-container fluid>
+                        <v-layout row wrap>
+                          <v-flex xs12 v-if=!feedbacks.length>
+                            <v-card flat>
+                              <v-card-text>
+                                Nenhum feedback negativo registrado ainda, seja o primeiro!
+                              </v-card-text>
+                            </v-card>
+                          </v-flex>
+                          <v-flex xs12 v-for="(feedback, index) in feedbacks" :key=index v-if=!feedback.is_pro>
+                            <v-card flat>
+                              <v-card-text>
+                                <v-layout row wrap>
+                                  <v-flex xs1>
+                                    <v-avatar>
+                                    <img src="/static/resources/img/nopic.png">
+                                  </v-avatar>
+                                  </v-flex>
+                                  <v-flex xs11>
+                                    <v-layout row wrap>
+                                      <v-flex xs3>
+                                        <h4>{{ feedback.author }}</h4>
+                                      </v-flex>
+                                      <v-flex xs9>
+                                        <!-- fure work, last edit -->
+                                      </v-flex>
+                                      <v-flex xs12>
+                                        <p class="body-1">
+                                          {{ feedback.description }}
+                                        </p>
+                                      </v-flex>
+                                    </v-layout>
+                                  </v-flex>
+                                </v-layout>
+                              </v-card-text>
+                            </v-card>
+                            <v-divider></v-divider>
+                          </v-flex>
+                        </v-layout>
+                      </v-container>
+                    </v-card>
+                  </v-tabs-content>
+                  <v-tabs-content id="relatos">
+                    <v-card name="baseCard">
+                      <v-container fluid>
+                        <v-layout row wrap>
+                          <v-flex xs12 v-if=!relatos.length>
+                            <v-card flat>
+                              <v-card-text>
+                                Nenhum relato registrado ainda, seja o primeiro!
+                              </v-card-text>
+                            </v-card>
+                          </v-flex>
+                          <v-flex xs12 v-for="(relato, index) in relatos" :key=index>
+                            <v-card flat>
+                              <v-card-text>
+                                <v-layout row wrap>
+                                  <v-flex xs1>
+                                    <v-avatar>
+                                    <img src="/static/resources/img/nopic.png">
+                                  </v-avatar>
+                                  </v-flex>
+                                  <v-flex xs11>
+                                    <v-layout row wrap>
+                                      <v-flex xs3>
+                                        <h4>{{ relato.author }}</h4>
+                                      </v-flex>
+                                      <v-flex xs9>
+                                        <!-- fure work, last edit -->
+                                      </v-flex>
+                                      <v-flex xs12>
+                                        <p class="body-1">
+                                          {{ relato.description }}
+                                        </p>
+                                      </v-flex>
+                                    </v-layout>
+                                  </v-flex>
+                                </v-layout>
+                              </v-card-text>
+                            </v-card>
+                            <v-divider></v-divider>
+                          </v-flex>
+                        </v-layout>
+                      </v-container>
+                    </v-card>
+                  </v-tabs-content>
+                </v-tabs-items>
+              </v-tabs>
             </v-flex>
             <v-flex xs2 class="ml-5">
-              <v-card flat class="deep-purple lighten-4">
+              <v-card flat class="grey lighten-3">
                 <v-subheader>
                   Recursos relacionados
                 </v-subheader>
                 <v-container fluid>
                   <v-layout row wrap>
                     <v-flex xs12 v-for="(resource, index) in resource.resources" :key="index">
-                      <v-card>
+                      <v-card class="mb-2">
                         <v-card-media :src=imageUrl(resource.image_set[0]) height="150px"></v-card-media>
                       </v-card>
                     </v-flex>
@@ -161,10 +275,11 @@
 export default {
   data(){
     return {
-      title: 'Catalogy',
+      title: 'Nice Resource',
       resource: '',
       userName: '',
       userNameGetter: false,
+      drawer: true,
       feedbackOrderOptions: [
         { text: 'Relevancia', value:'rel' },
         { text: 'Mais antigo', value:'ant' },
@@ -172,6 +287,7 @@ export default {
       ],
       feedbackOrderSelected: 'rel',
       feedbacks: [],
+      relatos: [],
       feedbackDialog: false,
       feedbackDescription: '',
       resourceFeedbackAp: false,
@@ -186,6 +302,7 @@ export default {
          this.resource = req.data
       })
       this.$http.get("/api"+window.location.pathname+"feedback/?format=json").then( (req) => this.feedbacks = req.data )
+      this.$http.get("/api"+window.location.pathname+"relato/?format=json").then( (req) => this.relatos = req.data )
       this.userName = document.getElementById('userName').value
     }
   },

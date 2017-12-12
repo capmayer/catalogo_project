@@ -30,7 +30,7 @@
           <v-switch label="Difícil" v-model="difAv" value="av"></v-switch>
         </div>
         <template>
-          <v-footer absolute class="pa-3">
+          <v-footer absolute class="pa-3" color="blue lighten-2">
             <a v-on:click="addResourceDialog= true">ADICIONE UM RECURSO</a>
           </v-footer>
         </template>
@@ -67,9 +67,12 @@
                   :items="languageOptions"
                 ></v-select>
               </v-flex>
+              <v-flex x12 sm12>
+                <v-btn>IMAGEM</v-btn>
+              </v-flex>
             </v-layout>
           </v-container>
-          <small>*indicates required field</small>
+          <small>*campo obrigatório</small>
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
@@ -80,7 +83,8 @@
         </v-dialog>
       </v-navigation-drawer>
       <v-toolbar class="white" app fixed clipped-left>
-        <v-toolbar-title v-text="title"></v-toolbar-title>
+        <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
+        <v-toolbar-title v-on:click="goToUrl('/')" v-text="title"></v-toolbar-title>
         <v-spacer></v-spacer>
         <template v-if="userLogged">
           <v-btn flat>
@@ -93,7 +97,7 @@
           </v-btn>
         </template>
       </v-toolbar>
-      <v-container fluid class="deep-purple lighten-4">
+      <v-container fluid class="blue lighten-4">
         <v-container grid-list-lg>
           <v-layout row wrap>
             <v-flex xs12>
@@ -140,8 +144,8 @@ export default {
       user: '',
       show: '',
       userName: '',
-      title: "Catalogy",
-      drawer: null,
+      title: "Nice Resource",
+      drawer: true,
       sortDirection: 'desc',
       searchFilter: '',
       listSave: [],

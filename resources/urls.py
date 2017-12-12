@@ -11,12 +11,15 @@ urlpatterns = [
 
     url(r'^api/resource/$', views.ResourceList.as_view()),
     url(r'^api/resource/(?P<slug>[\w-]+)/feedback/$', views.ResourceFeedbackList.as_view()),
+    url(r'^api/resource/(?P<slug>[\w-]+)/relato/$', views.ResourceRelatoList.as_view()),
     url(r'^api/resource/(?P<slug>[\w-]+)/$', views.ResourceDetail.as_view()),
 
     url(r'^api/feedback/$', views.FeedbackList.as_view()),
     url(r'^api/feedback/(?P<uuid>[^/]+)/$', views.FeedbackDetail.as_view()),
 
-    url(r'^resource/new/$', views.resource_new, name='resource_new'),
+    url(r'^api/relato/$', views.RelatoList.as_view()),
+    url(r'^api/relato/(?P<uuid>[^/]+)/$', views.RelatoDetail.as_view()),
+
     url(r'^resource/(?P<slug>[\w-]+)/$', views.resource_detail, name='resource_detail'),
 
     url(r'^all/$', views.resources_list, name='resources_list'),

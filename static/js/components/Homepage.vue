@@ -2,7 +2,7 @@
   <div id="homepage">
     <v-app light>
       <v-toolbar class="white">
-        <v-toolbar-title v-text="title"></v-toolbar-title>
+        <v-toolbar-title v-on:click="goToUrl('/')" v-text="title"></v-toolbar-title>
         <v-spacer></v-spacer>
         <template v-if="userLogged">
           <v-btn flat>
@@ -171,7 +171,7 @@
 export default {
   data() {
     return {
-      title: 'Catalogy',
+      title: 'Nice Resource',
       userName: '',
     }
   },

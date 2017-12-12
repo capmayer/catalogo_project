@@ -78,9 +78,7 @@ class Feedback(models.Model):
     uuid = models.UUIDField(default=uuid.uuid4, editable=False)
     resource = models.ForeignKey(Resource, on_delete=models.CASCADE)
     author = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
-    anonymous = models.CharField(max_length=50, null=True, blank=True)
-    title = models.CharField(max_length=255)
-    description = models.TextField(max_length=5000)
+    description = models.TextField(max_length=600)
     is_pro = models.BooleanField(default=True)
 
     likes = models.ManyToManyField(Like, blank=True)
@@ -90,4 +88,19 @@ class Feedback(models.Model):
     last_modified_date = models.DateTimeField(auto_now=True, auto_now_add=False)
 
     def __str__(self):
-        return self.title
+        return self.description
+
+class Relato(models.Model):
+    uuid = models.UUIDField(default=uuid.uuid4, editable=False)
+    resource = models.ForeignKey(Resource, on_delete=models.CASCADE)
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    description = models.TextField(max_length=5000)
+
+    likes = models.ManyToManyField(Like, blank=True)
+    deslikes = models.ManyToManyField(Deslike, blank=True)
+
+    created_date = models.DateTimeField(auto_now_add=True, null=True)
+    last_modified_date = models.DateTimeField(auto_now=True, auto_now_add=False)
+
+    def __str__(self):
+        return self.author.username

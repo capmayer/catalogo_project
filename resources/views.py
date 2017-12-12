@@ -13,10 +13,9 @@ from rest_framework import status
 from hitcount.models import HitCount
 from hitcount.views import HitCountMixin
 
-from .models import Resource, Feedback, Image
+from .models import Resource, Feedback, Image, Relato
 from .filters import ResourceFilter
-from .forms import ResourceForm, FeedbackForm, FeedbackAnonymousForm, ImageForm, TagForm
-from .serializers import ResourceSerializer, FeedbackSerializer, LikeSerializer, DeslikeSerializer
+from .serializers import ResourceSerializer, FeedbackSerializer, LikeSerializer, DeslikeSerializer, RelatoSerializer
 
 def home(request):
     return render(request, 'resources/home.html', { 'userName': request.user.username, 'userId': request.user.id })
@@ -27,37 +26,6 @@ def resources_list(request):
 @ensure_csrf_cookie
 def resource_detail(request, slug):
     return render(request, 'resources/resource_detail.html', { 'userName': request.user.username, 'userId': request.user.id })
-
-def resource_new(request):
-    if request.method == "POST":
-        resource_form = ResourceForm(request.POST)
-        image_form = ImageForm(request.POST, request.FILES)
-        tag_form = TagForm(request.POST)
-        if 'tag_submit' in request.POST:
-            if tag_form.is_valid():
-                tag = tag_form.save()
-        else:
-            if resource_form.is_valid() and image_form.is_valid():
-                resource = resource_form.save(commit=False)
-
-                if request.user.is_authenticated:
-                    resource.author = request.user
-
-                resource.save()
-
-                image = image_form.save(commit=False)
-
-                image.resource = resource
-                image.is_main = True
-
-                image.save()
-
-                return redirect('resource_detail', slug=resource.slug)
-    else:
-        resource_form = ResourceForm()
-        image_form = ImageForm()
-        tag_form = TagForm()
-    return render(request, 'resources/resource_new.html', { 'resource_form': resource_form, 'image_form': image_form, 'tag_form': tag_form })
 
 class ResourceList(APIView):
     def get(self, request, format=None):
@@ -101,6 +69,12 @@ class ResourceFeedbackList(APIView):
     def get(self, request, slug, format=None):
         feedbacks = Feedback.objects.filter(resource__slug=slug)
         serializer = FeedbackSerializer(feedbacks, many=True)
+        return Response(serializer.data, content_type="application/json")
+
+class ResourceRelatoList(APIView):
+    def get(self, request, slug, format=None):
+        relatos = Relato.objects.filter(resource__slug=slug)
+        serializer = RelatoSerializer(relatos, many=True)
         return Response(serializer.data, content_type="application/json")
 
 class FeedbackList(APIView):
@@ -148,3 +122,41 @@ class LikeList(APIView):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+class RelatoList(APIView):
+    def get(self, request, format=None):
+        relatos = Relato.objects.all()
+        serializer = RelatoSerializer(relatos, many=True)
+        return Response(serializer.data, content_type="application/json")
+
+    def post(self, request, format=None):
+        serializer = RelatoSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+class RelatoDetail(APIView):
+    def get_object(self, uuid):
+        try:
+            return Relato.objects.get(uuid=uuid)
+        except Relato.DoesNotExist:
+            raise Http404
+
+    def get(self, request, uuid, format=None):
+        relato = self.get_object(uuid)
+        serializer = RelatoSerializer(relato)
+        return Response(serializer.data, content_type="application/json")
+
+    def put(self, request, uuid, format=None):
+        relato = self.get_object(uuid)
+        serializer = RelatoSerializer(relato, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, content_type="application/json")
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def delete(self, request, uuid, format=None):
+        relato = self.get_object(uuid)
+        relato.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
