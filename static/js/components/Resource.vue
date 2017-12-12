@@ -117,7 +117,6 @@
                 <v-card-title primary-title>
                   <div>
                     <div class="headline">{{ resource.title }}</div>
-                    <span class="grey--text">{{ resource.description.substring(0, 80) }}...</span>
                   </div>
                 </v-card-title>
                 <v-card-actions>

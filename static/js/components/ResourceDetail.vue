@@ -228,9 +228,11 @@
                 <v-container fluid>
                   <v-layout row wrap>
                     <v-flex xs12 v-for="(resource, index) in resource.resources" :key="index">
-                      <v-card class="mb-2">
-                        <v-card-media href="goToUrl('/all'+resource.slug)" :src=imageUrl(resource.image_set[0]) height="150px"></v-card-media>
-                      </v-card>
+                      <a :href=resourceUrl(resource.slug) >
+                        <v-card class="mb-2">
+                          <v-card-media :src=imageUrl(resource.image_set[0]) height="150px"></v-card-media>
+                        </v-card>
+                      </a>
                     </v-flex>
                   </v-layout>
                 </v-container>
@@ -353,6 +355,9 @@ export default {
       else {
         return true
       }
+    },
+    resourceUrl(slug){
+      return "/all/"+slug
     }
   }
 }

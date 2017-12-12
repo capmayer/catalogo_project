@@ -176,5 +176,7 @@ AWS_ACCESS_KEY_ID = os.environ['AWS_ACCESS_KEY_ID']
 AWS_SECRET_ACCESS_KEY = os.environ['AWS_SECRET_ACCESS_KEY']
 AWS_STORAGE_BUCKET_NAME = 'nice-catalogo'
 
+CSRF_USE_SESSIONS = True
+SESSION_ENGINE = 'django.contrib.sessions.backends.signed_cookies'
 
 HITCOUNT_KEEP_HIT_ACTIVE = { 'days': 3 }
