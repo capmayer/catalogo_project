@@ -229,7 +229,7 @@
                   <v-layout row wrap>
                     <v-flex xs12 v-for="(resource, index) in resource.resources" :key="index">
                       <v-card class="mb-2">
-                        <v-card-media :src=imageUrl(resource.image_set[0]) height="150px"></v-card-media>
+                        <v-card-media href="goToUrl('/all'+resource.slug)" :src=imageUrl(resource.image_set[0]) height="150px"></v-card-media>
                       </v-card>
                     </v-flex>
                   </v-layout>

@@ -106,7 +106,7 @@
           </v-layout>
           <v-layout row wrap>
             <v-flex
-              xs6
+              xs6 sm6
               v-for="(resource, index) in listFilter"
               :key="index">
               <v-card contain>
@@ -117,14 +117,14 @@
                 <v-card-title primary-title>
                   <div>
                     <div class="headline">{{ resource.title }}</div>
-                    <span class="grey--text">{{ resource.description }}</span>
+                    <span class="grey--text">{{ resource.description.substring(0, 80) }}...</span>
                   </div>
                 </v-card-title>
                 <v-card-actions>
 
                   <v-spacer></v-spacer>
                   <!-- <v-btn flat>Compartilhar</v-btn>  futures work -->
-                  <v-btn :href=resourceUrl(resource.slug) > Ver mais</v-btn>
+                  <v-btn :href=resourceUrl(resource.slug)> Ver mais</v-btn>
 
                 </v-card-actions>
               </v-card>
